@@ -123,8 +123,8 @@ a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%
 <div class="brandbar"><img src="assets/fx-cover-me-logo.jpg?v=20261010-1333" alt="FX Cover Me Insurance Agency"><p class="brand-motto"><span>Right Coverage, Right Price — 保得全，买得值</span><span>We've Got You Covered — 为您遮风挡雨</span></p></div>
 <main>
 <nav class="language-switcher" aria-label="语言选择 / Language selection">
-<button type="button" data-lang="zh" aria-pressed="true">中文</button>
-<button type="button" data-lang="en" aria-pressed="false">English</button>
+<button type="button" data-lang="zh" aria-pressed="false">中文</button>
+<button type="button" data-lang="en" aria-pressed="true">English</button>
 <button type="button" data-lang="es" aria-pressed="false">Español</button>
 <button type="button" data-lang="ar" aria-pressed="false">العربية</button>
 <button type="button" data-lang="hi" aria-pressed="false">हिन्दी</button>
@@ -525,15 +525,15 @@ if(root.closest&&root.closest('.language-switcher'))return;
 Array.from(root.childNodes).forEach(translateNode);
 }
 function applyLanguage(next){
-lang=langs.includes(next)?next:'zh';document.documentElement.lang=lang==='zh'?'zh-CN':lang;document.title={zh:'保险报价信息表',en:'Insurance Quote Information Form',es:'Formulario de cotización de seguros',ar:'نموذج معلومات عرض التأمين',hi:'बीमा कोटेशन जानकारी फ़ॉर्म'}[lang];window.__quoteTranslate=tr;
+lang=langs.includes(next)?next:'en';document.documentElement.lang=lang==='zh'?'zh-CN':lang;document.title={zh:'保险报价信息表',en:'Insurance Quote Information Form',es:'Formulario de cotización de seguros',ar:'نموذج معلومات عرض التأمين',hi:'बीमा कोटेशन जानकारी फ़ॉर्म'}[lang];window.__quoteTranslate=tr;
 const shell=document.getElementById('formShell'),motto=document.querySelector('.brand-motto'),contact=document.querySelector('.contact');if(lang==='ar'){shell.setAttribute('dir','rtl');motto.setAttribute('dir','rtl');contact.setAttribute('dir','rtl')}else{shell.setAttribute('dir','ltr');motto.setAttribute('dir','ltr');contact.setAttribute('dir','ltr')}
 document.querySelectorAll('.language-switcher button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===lang)));
 translateNode(document.body);
 }
-document.querySelector('.language-switcher').addEventListener('click',e=>{const b=e.target.closest('[data-lang]');if(b)applyLanguage(b.dataset.lang)});
+document.querySelector('.language-switcher').addEventListener('click',e=>{const b=e.target.closest('[data-lang]');if(b){applyLanguage(b.dataset.lang);try{localStorage.setItem('fxcoverme-lang',b.dataset.lang)}catch(err){}}});
 const observer=new MutationObserver(records=>{records.forEach(r=>{r.addedNodes.forEach(n=>translateNode(n));if(r.type==='characterData')translateNode(r.target)})});
 observer.observe(document.body,{subtree:true,childList:true,characterData:true});
-applyLanguage('zh');
+(function(){var saved=null;try{saved=localStorage.getItem('fxcoverme-lang')}catch(err){}applyLanguage(saved||'en')})();
 })();
 </script>
 </body>
