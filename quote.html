@@ -401,7 +401,7 @@ const FIELD_KEY_MAP={
 '其它问题':'additional_questions','无现有保单':'no_current_policy','想了解的产品':'products_of_interest'
 };
 function englishPayloadKey(key){
-if(key==='_subject'||key==='_gotcha'||key==='_replyto'||key==='_next')return key;
+if(key==='access_key'||key==='redirect'||key==='subject'||key==='from_name'||key==='botcheck'||key==='_subject'||key==='_gotcha'||key==='_replyto'||key==='_next')return key;
 if(FIELD_KEY_MAP[key])return FIELD_KEY_MAP[key];
 let match=key.match(/^近(\d+)年理赔$/);if(match)return `claims_last_${match[1]}_years`;
 match=key.match(/^驾驶员(\d+)-(First Name|Last Name|出生日期|关系|驾照州|在美国驾龄|CDL州|CDL驾龄|事故违章)$/);
