@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="artifact-version" content="2026.10.10.1545-ET">
+<link rel="icon" href="data:,">
+<title>保险报价信息表</title>
+<style>
+:root{
+color-scheme:light dark;
+--bg:#f3f1eb;--surface:#ffffff;--surface-2:#f8f7f3;--ink:#191916;--muted:#5f625e;
+--line:#d8d5cc;--line-strong:#aba79d;--gold:#b77a08;--gold-2:#e8b341;--gold-soft:#fff3cf;
+--black:#0d0e0e;--danger:#b42318;--success:#11734b;--focus:#986600;
+--shadow:0 18px 50px rgba(20,18,12,.09);
+}
+@media (prefers-color-scheme:dark){
+:root{--bg:#11120f;--surface:#1b1c18;--surface-2:#22231e;--ink:#f4f2e9;--muted:#b9bbb4;
+--line:#3b3c35;--line-strong:#66685f;--gold:#e7b445;--gold-2:#f0c563;--gold-soft:#302a1a;
+--black:#090a09;--danger:#ff8f88;--success:#72d4ac;--focus:#f0c563;--shadow:0 18px 50px rgba(0,0,0,.3)}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit}
+button{touch-action:manipulation}
+.page{max-width:900px;margin:0 auto;min-height:100vh;background:var(--surface);box-shadow:var(--shadow)}
+.brandbar{display:flex;align-items:center;gap:22px;background:var(--black);padding:12px 18px;border-bottom:3px solid var(--gold)}
+.brandbar img{display:block;width:338px;max-width:72vw;height:81px;object-fit:contain;object-position:left center}
+.brand-motto{flex:1;margin:0;color:#e8b341;font-family:Georgia,"Songti SC",serif;font-size:18px;font-weight:700;line-height:1.4;letter-spacing:.015em;text-align:center;background:linear-gradient(180deg,#fff1a6 0%,#f7cf5b 24%,#b87705 51%,#ffd86b 72%,#9a5b00 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 8px rgba(232,179,65,.24),0 1px 0 rgba(255,244,176,.18)}
+.brand-motto span{display:block}.brand-motto span+span{margin-top:4px}
+main{padding:24px 34px 80px}
+.language-switcher{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin:0 0 22px}
+.language-switcher button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);padding:7px 11px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer}
+.language-switcher button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.language-switcher button:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%,transparent);outline-offset:2px}
+.intro{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;padding-bottom:28px;border-bottom:1px solid var(--line)}
+h1{font-family:Georgia,"Songti SC",serif;font-size:clamp(29px,5vw,44px);line-height:1.14;margin:0 0 10px;letter-spacing:-.02em}
+.lede{margin:0;color:var(--muted);font-size:16px;max-width:650px}
+.estimate{font-size:13px;color:var(--muted);white-space:nowrap;border:1px solid var(--line);padding:7px 10px;border-radius:4px}
+.privacy{display:flex;gap:10px;align-items:flex-start;background:var(--gold-soft);padding:13px 14px;margin:18px 0 24px;border-radius:6px;color:var(--ink);font-size:14px}
+.privacy svg{width:19px;height:19px;flex:0 0 auto;margin-top:1px;color:var(--gold)}
+.privacy-disclosure{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+.eyebrow{font-size:13px;font-weight:700;color:var(--gold);margin:0 0 10px;letter-spacing:.04em}
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.type-btn{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:7px;padding:16px 9px 13px;min-height:105px;cursor:pointer;text-align:center;transition:border-color.16s,background.16s,box-shadow.16s}
+.type-btn:hover{border-color:var(--line-strong)}
+.type-btn:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%,transparent);outline-offset:2px}
+.type-btn.selected{border-color:var(--gold);background:var(--gold-soft);box-shadow:inset 0 -3px 0 var(--gold)}
+.type-btn svg{display:block;width:30px;height:30px;margin:0 auto 9px;stroke:currentColor;fill:none;stroke-width:1.8}
+.type-btn strong{display:block;font-size:15px}.type-btn span{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+.form-shell{display:none;margin-top:32px}.form-shell.active{display:block}.form-shell[dir="rtl"]{text-align:right}.form-shell[dir="rtl"] .section-num{margin-right:0;margin-left:8px}.form-shell[dir="rtl"] .req{margin-left:0;margin-right:2px}.form-shell[dir="rtl"] input,.form-shell[dir="rtl"] select,.form-shell[dir="rtl"] textarea{text-align:right}.form-shell[dir="rtl"] .form-disclosure{direction:rtl}
+.form-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:22px}
+.form-head h2{font-family:Georgia,"Songti SC",serif;font-size:25px;line-height:1.2;margin:0 0 5px}.form-head p{margin:0;color:var(--muted);font-size:13px}
+.change{border:0;background:none;color:var(--gold);font-weight:700;cursor:pointer;padding:4px;white-space:nowrap}
+.section{padding:24px 0 5px;border-top:1px solid var(--line)}
+.section h3{font-size:17px;margin:0 0 16px}.section-num{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:12px;margin-right:8px;vertical-align:1px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.field{min-width:0}.field.full{grid-column:1/-1}.field label,.legend{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.req{color:var(--danger);margin-left:2px}
+input,select,textarea{width:100%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:5px;padding:12px 12px;min-height:48px;outline:none}
+textarea{min-height:92px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.75}
+input:focus,select:focus,textarea:focus{border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 18%,transparent)}
+input[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 3px color-mix(in srgb,var(--danger) 14%,transparent)}
+.hint{font-size:12px;color:var(--muted);margin:5px 0 0}.name-hint{grid-column:1/-1;margin:-8px 0 0}
+.choice-row{display:flex;flex-wrap:wrap;gap:8px}
+.choice-row label{font-weight:500;margin:0;cursor:pointer}
+.choice-row input{position:absolute;opacity:0;pointer-events:none}
+.choice-row span{display:block;border:1px solid var(--line-strong);padding:9px 12px;border-radius:999px;background:var(--surface)}
+.choice-row input:checked+span{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.choice-row input:focus-visible+span{outline:3px solid color-mix(in srgb,var(--focus) 30%,transparent)}
+.repeat{margin:0 0 14px;padding:16px;background:var(--surface-2);border-top:3px solid var(--line-strong);border-radius:3px 3px 6px 6px}
+.repeat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.repeat-head h4{margin:0;font-size:14px}.remove{border:0;background:none;color:var(--danger);font-size:13px;cursor:pointer;padding:4px}
+.add-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);padding:10px 13px;border-radius:5px;font-weight:700;cursor:pointer}.add-btn svg{width:17px;height:17px}
+.form-disclosure{display:flex;gap:9px;align-items:flex-start;margin:25px 0 0;padding:12px 13px;background:var(--gold-soft);border-radius:5px;color:var(--ink);font-size:13px;line-height:1.6}
+.form-disclosure svg{width:18px;height:18px;flex:0 0 auto;margin-top:1px;color:var(--gold)}
+.additional-note{margin-top:18px}.additional-note textarea{min-height:104px}.additional-note .hint{text-align:right}
+.form-shell[dir="rtl"] .additional-note .hint{text-align:left}
+.actions{display:flex;gap:10px;margin-top:14px;align-items:center}.primary,.secondary{border:0;border-radius:5px;padding:13px 19px;min-height:50px;font-weight:800;cursor:pointer}.primary{background:var(--gold);color:#17130a;flex:1}.primary:hover{background:var(--gold-2)}.primary:disabled{cursor:wait;opacity:.68}.secondary{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.error-box{display:none;color:var(--danger);margin:12px 0 0;font-size:13px;font-weight:700}.error-box.show{display:block}
+.submit-status{display:none;margin:14px 0 0;padding:12px 14px;border-radius:5px;background:color-mix(in srgb,var(--danger) 10%,var(--surface));color:var(--danger);font-size:14px;font-weight:700}.submit-status.show{display:block}
+.honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.result{display:none;margin-top:28px;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.result.active{display:block}
+.result h2{font-family:Georgia,"Songti SC",serif;margin:0 0 7px;font-size:27px;color:var(--success)}.result>p{margin:0 0 18px;color:var(--muted);font-size:15px}
+.result-actions{display:flex;gap:10px}.result-actions .primary{flex:0 1 220px}
+.contact{display:grid;grid-template-columns:minmax(0,540px) auto;justify-content:end;align-items:start;gap:28px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line)}
+.signature{width:100%;padding:2px 0 2px 18px;border-left:3px solid var(--gold);text-align:left}
+.signature-name{font-family:Georgia,"Songti SC",serif;font-size:19px;font-weight:700;line-height:1.35;color:var(--ink)}
+.signature-name span{font-size:16px;font-weight:600}
+.signature-agency{margin-top:3px;font-size:13px;font-weight:700;color:var(--ink)}
+.signature-details{margin-top:10px;font-size:13px;line-height:1.75;color:var(--muted)}
+.signature-details a{color:inherit;text-decoration-color:var(--line-strong);text-underline-offset:2px}
+.social-panel{min-width:300px}
+.social-title{margin:0 0 9px;font-family:Georgia,"Songti SC",serif;font-size:16px;font-weight:700;color:var(--ink)}
+.social-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.social-item{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;text-decoration:none}
+.social-tile{display:grid;place-items:center;width:100%;max-width:84px;aspect-ratio:1/1;border:1px solid var(--gold);border-radius:8px;background:var(--black);color:#e8b341;overflow:hidden;transition:background .16s,color .16s}
+.social-tile svg{width:54%;height:54%;fill:currentColor}
+a.social-item:hover .social-tile{background:var(--gold);color:var(--black)}
+a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%,transparent);outline-offset:2px;border-radius:8px}
+.social-tile.qr{background:#fff;border-color:var(--line)}
+.social-tile.qr img{display:block;width:100%;height:100%;object-fit:contain;padding:4px}
+.social-tile.logo img{display:block;width:100%;height:100%;object-fit:contain;padding:5px}
+.social-cap{font-size:12px;font-weight:700;line-height:1.35;color:var(--muted);text-align:center;overflow-wrap:anywhere}
+.contact[dir="rtl"]{text-align:right}
+.contact[dir="rtl"] .signature{padding:2px 18px 2px 0;border-left:0;border-right:3px solid var(--gold);text-align:right}
+.contact[dir="rtl"] .social-row{direction:rtl}
+.build-version{margin:18px 0 0;color:var(--muted);font-size:11px;line-height:1.4;text-align:center}
+.hidden{display:none!important}
+@media(max-width:720px){
+.page{box-shadow:none}.language-switcher{justify-content:center;margin-bottom:18px}.language-switcher button{flex:1 1 calc(50% - 6px)}.brandbar{padding:10px 15px 12px;gap:8px;align-items:flex-start;flex-direction:column}.brandbar img{height:65px;width:267px;max-width:72vw}.brand-motto{width:100%;font-size:13px;line-height:1.35;text-align:center}.brand-motto span+span{margin-top:2px}main{padding:25px 16px 64px}.intro{grid-template-columns:1fr;gap:12px;padding-bottom:22px}.estimate{justify-self:start}.type-grid{grid-template-columns:repeat(2,1fr)}.form-head{margin-bottom:18px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.section{padding-top:21px}.actions{flex-direction:column}.actions button{width:100%}.result-actions{grid-template-columns:1fr}.result-actions button{width:100%}.contact{grid-template-columns:1fr;justify-content:stretch;gap:24px;margin-top:36px}.signature{padding-left:14px}.signature-name span{display:block;margin-top:2px}.social-panel{padding-left:17px;min-width:0}.contact[dir="rtl"] .social-panel{padding-left:0;padding-right:17px}}
+@media print{.brandbar,.type-grid,.eyebrow,.privacy,.change,.actions,.result-actions{display:none!important}.page{box-shadow:none}body{background:white;color:black}main{padding:0}.contact{break-inside:avoid}}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a href="index.html">← 返回首页 Back to Home</a><a href="tel:+16145699025" class="nav-phone">614-569-9025</a></nav>
+<style>.site-nav{display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:0 auto;padding:10px 18px;background:#0b0b0c;border-bottom:1px solid #2c2c30}.site-nav a{color:#e8c15a;text-decoration:none;font-size:14px;font-weight:700}.site-nav a:hover{text-decoration:underline}.site-nav .nav-phone{color:#b8b4a8}</style>
+<div class="page">
+<div class="brandbar"><img src="assets/fx-cover-me-logo.jpg?v=20261010-1333" alt="FX Cover Me Insurance Agency"><p class="brand-motto"><span>Right Coverage, Right Price — 保得全，买得值</span><span>We've Got You Covered — 为您遮风挡雨</span></p></div>
+<main>
+<nav class="language-switcher" aria-label="语言选择 / Language selection">
+<button type="button" data-lang="zh" aria-pressed="true">中文</button>
+<button type="button" data-lang="en" aria-pressed="false">English</button>
+<button type="button" data-lang="es" aria-pressed="false">Español</button>
+<button type="button" data-lang="ar" aria-pressed="false">العربية</button>
+<button type="button" data-lang="hi" aria-pressed="false">हिन्दी</button>
+</nav>
+<section class="intro">
+<div><h1>请先选择您需要的报价</h1><p class="lede">按提示填写并提交，资料会直接发送给保险顾问，我们将尽快联系您准备报价。</p></div>
+<div class="estimate">约 5–10 分钟</div>
+</section>
+
+<div class="privacy">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V7a6 6 0 0 1 12 0v3M5 10h14v11H5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+<div><strong>请放心填写：</strong>本表不收集社会安全号（SSN）、付款/银行信息或驾照号码。提交后，资料会经由 Web3Forms 安全发送至保险顾问邮箱。<p class="privacy-disclosure">您提交的信息仅用于为您准备保险报价，我们将依据联邦《Gramm-Leach-Bliley 法案》及州保险隐私法规保护您的个人信息。</p></div>
+</div>
+
+<p class="eyebrow">报价类型</p>
+<div class="type-grid" id="typeGrid">
+<button class="type-btn" type="button" data-type="auto">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 20l2-8h18l2 8v6h-3v-3H8v3H5v-6Zm2 0h20M10 18h2m8 0h2M10 12l2-4h8l2 4"/></svg><strong>汽车保险</strong><span>个人车辆</span>
+</button>
+<button class="type-btn" type="button" data-type="home">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 15 16 5l12 10M7 13v14h18V13M13 27v-8h6v8"/></svg><strong>房屋保险</strong><span>自住房 / 出租房</span>
+</button>
+<button class="type-btn" type="button" data-type="business">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28V10h22v18M10 10V5h12v5M4 15h24M11 20h3m4 0h3M11 24h3m4 0h3"/></svg><strong>商业保险</strong><span>商铺 / 服务业</span>
+</button>
+<button class="type-btn" type="button" data-type="restaurant">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 4v10m-4-10v6c0 3 8 3 8 0V4m-4 10v14M22 4c-4 4-4 11 0 13v11m0-24v13"/></svg><strong>餐馆保险</strong><span>餐饮 / 外卖</span>
+</button>
+<button class="type-btn" type="button" data-type="truck">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 8h17v15H3zM20 13h5l4 5v5h-9M8 27a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg><strong>卡车保险</strong><span>商业卡车</span>
+</button>
+<button class="type-btn" type="button" data-type="health">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28S5 22 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 10-11 16-11 16Z"/><path d="M10 16h4l2-5 3 9 2-4h3"/></svg><strong>医疗保险</strong><span>个人 / 家庭</span>
+</button>
+<button class="type-btn" type="button" data-type="medicare">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28a12 12 0 1 0 0-24 12 12 0 0 0 0 24Z"/><path d="M16 9v14M9 16h14"/></svg><strong>Medicare</strong><span>即将满65岁 / 65岁及以上</span>
+</button>
+<button class="type-btn" type="button" data-type="aca">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28S5 22 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 10-11 16-11 16Z"/><path d="M16 10v12M10 16h12"/></svg><strong>奥巴马医保 (ACA)</strong><span>Marketplace 计划</span>
+</button>
+</div>
+
+<section class="form-shell" id="formShell">
+<div class="form-head"><div><h2 id="formTitle"></h2><p id="formSubtitle"></p></div><button class="change" id="changeType" type="button">更换类型</button></div>
+<form id="quoteForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+<input type="hidden" name="access_key" value="f565e3eb-7a38-44e1-9f6e-66b64d27a64e">
+<input type="hidden" name="subject" id="emailSubject" value="【报价表】保险报价">
+<input type="hidden" name="replyto" id="emailReplyTo" value="">
+<input type="hidden" name="redirect" value="https://fxcoverme.com/#thanks">
+<div class="honeypot" aria-hidden="true"><label for="companyWebsite">请勿填写此栏</label><input type="checkbox" id="companyWebsite" name="botcheck" tabindex="-1" autocomplete="off" style="display:none"></div>
+<div id="formContent"></div>
+<div class="error-box" id="errorBox" role="alert">请先填写红色星号标注的必填项。</div>
+<div class="form-disclosure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V7a6 6 0 0 1 12 0v3M5 10h14v11H5z" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>您提交的信息仅用于为您准备保险报价，我们将依据联邦《Gramm-Leach-Bliley 法案》及州保险隐私法规保护您的个人信息。</span></div>
+<div class="field additional-note"><label for="additionalQuestions">如果有其它问题，请留言。</label><textarea id="additionalQuestions" name="其它问题" aria-label="如果有其它问题，请留言。" maxlength="150"></textarea><p class="hint">最多150字</p></div>
+<div class="actions"><button class="primary" id="submitBtn" type="submit">提交报价资料</button><button class="secondary" id="clearBtn" type="button">清空重填</button></div>
+<div class="submit-status" id="submitStatus" role="alert"></div>
+</form>
+</section>
+
+<section class="result" id="result" aria-live="polite">
+<h2>提交成功！</h2>
+<p>我们会尽快联系您准备报价。</p>
+<div class="result-actions"><button class="primary" id="newQuoteBtn" type="button">再填写一份报价表</button></div>
+</section>
+
+<footer class="contact" aria-label="保险顾问联系方式">
+<div class="signature">
+<div class="signature-name">您的保险经纪人 许飞华 <span>Feihua Xu (Bernice)</span></div>
+<div class="signature-agency">FX Cover Me Insurance Agency</div>
+<div class="signature-details">
+<div>工作电话：<a href="tel:+16145699025">614-569-9025</a> · 邮箱：<a href="mailto:fxcoverme@gmail.com">fxcoverme@gmail.com</a></div>
+<div>565 Metro Place South, Dublin, OH 43017</div>
+</div>
+</div>
+<div class="social-panel">
+<h2 class="social-title">关注我们</h2>
+<div class="social-row">
+<a class="social-item" href="https://www.facebook.com/61595118899619" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><span class="social-tile">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.2V6.7c0-.7.5-.9.9-.9h2.3V2.1L14 2c-3.6 0-4.4 2.7-4.4 4.4v1.8H7v4.2h2.6V22H14v-9.6h3.2l.6-4.2H14Z"/></svg></span><span class="social-cap">Facebook</span>
+</a>
+<a class="social-item" href="https://www.instagram.com/fx_cover_me_insurance_agency" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><span class="social-tile">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2a5.4 5.4 0 0 1-5.4 5.4H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Zm-.2 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm10.1 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></span><span class="social-cap">Instagram</span>
+</a>
+<div class="social-item"><span class="social-tile qr"><img src="assets/wechat-qr.jpg?v=20261010-1333" alt="微信二维码"></span><span class="social-cap">扫码加微信</span></div>
+<div class="social-item"><span class="social-tile logo"><img src="assets/fx-cover-me-logo.jpg?v=20261010-1333" alt="FX Cover Me Insurance Agency"></span><span class="social-cap">FX Cover Me</span></div>
+</div>
+</div>
+</footer>
+<p class="build-version" aria-label="Current form version">Version 2026.10.10.1545 ET</p>
+</main>
+</div>
+
+<script>
+(function(){
+const titles={auto:['汽车保险报价','个人汽车保险｜可添加多位驾驶员和多辆车'],home:['房屋保险报价','自住房、出租房或度假屋'],business:['商业保险报价','适用于商铺、办公室、服务业及承包商'],restaurant:['餐馆保险报价','适用于餐厅、咖啡店、烘焙店及其他餐饮业务'],truck:['卡车保险报价','商业卡车｜可添加多位驾驶员和多辆车'],health:['医疗保险报价','个人或家庭医疗保险｜可添加多位家庭成员'],medicare:['Medicare 报价','Medicare Advantage、Medigap 与 Part D'],aca:['奥巴马医保 (ACA) 报价','Marketplace 个人及家庭医疗保险｜可添加多位参保人']};
+const yesNo='<option value="">请选择</option><option>否</option><option>是</option>';
+const f=(label,name,type='text',required=false,placeholder='',full=false)=>`<div class="field${full?' full':''}"><label>${label}${required?'<span class="req">*</span>':''}</label><input type="${type}" name="${name}" aria-label="${name}" data-label="${label}" ${required?'required':''} placeholder="${placeholder}"></div>`;
+const d=(label,name,required=false,full=false)=>`<div class="field${full?' full':''}"><label>${label}（月/日/年）${required?'<span class="req">*</span>':''}</label><input class="date-mask" type="text" name="${name}" aria-label="${label}（月/日/年）" data-label="${label}（月/日/年）" ${required?'required':''} placeholder="月/日/年" inputmode="numeric" maxlength="10"></div>`;
+const dob=(name,required=false,full=false)=>`<div class="field${full?' full':''}"><label>出生日期${required?'<span class="req">*</span>':''}</label><input class="date-mask" type="text" name="${name}" aria-label="出生日期（月/日/年）" data-label="出生日期（月/日/年）" ${required?'required':''} placeholder="月/日/年" inputmode="numeric" maxlength="10" autocomplete="bday"></div>`;
+const mdY=(label,name,required=false,full=false)=>`<div class="field${full?' full':''}"><label>${label}（月/日/年）${required?'<span class="req">*</span>':''}</label><input class="date-mask" type="text" name="${name}" aria-label="${label}（月/日/年）" data-label="${label}（月/日/年）" ${required?'required':''} placeholder="月/日/年" inputmode="numeric" maxlength="10"></div>`;
+const z=(name,required=true)=>`<div class="field"><label>ZIP Code / 邮编${required?'<span class="req">*</span>':''}</label><input type="text" name="${name}" aria-label="ZIP Code / 邮编" data-label="ZIP Code / 邮编" ${required?'required':''} inputmode="numeric" autocomplete="postal-code" placeholder="例如 43017"></div>`;
+const gz=(name,required=true)=>`<div class="field"><label>停放地邮编${required?'<span class="req">*</span>':''}</label><input type="text" name="${name}" aria-label="停放地邮编" data-label="停放地邮编" ${required?'required':''} inputmode="numeric" autocomplete="postal-code"></div>`;
+const s=(label,name,opts,required=false,full=false)=>`<div class="field${full?' full':''}"><label>${label}${required?'<span class="req">*</span>':''}</label><select name="${name}" aria-label="${name}" data-label="${label}" ${required?'required':''}><option value="">请选择</option>${opts.map(x=>`<option>${x}</option>`).join('')}</select></div>`;
+const ta=(label,name,placeholder='',full=true)=>`<div class="field${full?' full':''}"><label>${label}</label><textarea name="${name}" aria-label="${name}" data-label="${label}" placeholder="${placeholder}"></textarea></div>`;
+const sec=(n,title,html)=>`<section class="section"><h3><span class="section-num">${n}</span>${title}</h3><div class="fields">${html}</div></section>`;
+const policyExpiration=()=>d('保单到期日','保单到期日',true)+'<div class="field full"><div class="choice-row"><label><input type="checkbox" name="无现有保单" value="是" data-no-policy><span>无现有保单</span></label></div></div>';
+const common=()=>sec(1,'联系人与生效日期',
+f('First Name（名）','联系人-First Name','text',true,'请输入名')+f('Last Name（姓）','联系人-Last Name','text',true,'请输入姓')+'<p class="hint name-hint">须与驾照上的姓名一致 (Must be the same as your driver\'s license)</p>'+f('手机号码','电话','tel',true,'例如 614-555-1234')+f('电子邮箱','邮箱','email',true,'name@example.com')+d('希望生效日期','希望生效日期',true)
+);
+const history=(n,years='3')=>sec(n,'现有保险与理赔记录',
+f('现有保险公司','现有保险公司')+policyExpiration()+f('目前保费','目前保费','text',false,'可填每月或每期金额')+s('是否曾被取消或拒绝续保','曾被取消或拒续保',['否','是'],true)+s(`近${years}年是否有理赔或事故`,`近${years}年理赔`,['否','是'],true)+ta('理赔、事故或取消情况说明','记录说明','请写日期、类型及大约金额；没有可不填')
+);
+const auto=()=>common()+sec(2,'保单与保障需求',
+f('居住地址（街道、城市、州）','居住地址','text',true,'街道、城市、州',true)+z('居住地址-邮编')+s('住房情况','住房情况',['自有','租住','与家人同住','其他'])+s('需要的保障','保障类型',['全险（责任险 + 综合险 + 碰撞险）','仅责任险','不确定，请帮我比较'],true)+s('目前责任限额','目前责任限额',['5万/10万','10万/30万','25万/50万'])+f('希望免赔额','希望免赔额','text',false,'例如 $500 或 $1,000')+s('近12个月保险是否中断','近12个月保险中断',['否','是'],true)
+)+sec(3,'驾驶员','<div class="field full"><div id="drivers"></div><button class="add-btn" type="button" data-add="driver"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>添加驾驶员</button><p class="hint">无需填写驾照号码。</p></div>')+sec(4,'车辆','<div class="field full"><div id="vehicles"></div><button class="add-btn" type="button" data-add="autoVehicle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>添加车辆</button></div>')+history(5);
+const home=()=>common()+sec(2,'房屋基本信息',
+f('房屋地址（街道、城市、州）','房屋地址','text',true,'街道、城市、州',true)+z('房屋地址-邮编')+s('房屋用途','房屋用途',['自住','出租','度假屋 / 第二住所','空置','正在购买'],true)+s('房屋类型','房屋类型',['独栋住宅','联排屋','公寓 Condo','多户住宅','活动房屋','其他'],true)+f('建造年份','建造年份','number',true)+f('居住面积（平方英尺）','居住面积','number',true)+f('层数','层数','number')+s('是否有地下室','地下室',['无','未装修','部分装修','全装修'])+s('车库','车库',['无','1车位','2车位','3车位及以上','独立车库'])
+)+sec(3,'建筑与设施',
+s('外墙结构','外墙结构',['木结构 Frame','砖 / Masonry','砖贴面','混合','不清楚'])+f('屋顶更换年份','屋顶年份','number',true)+s('屋顶材料','屋顶材料',['沥青瓦','金属','瓦片','平屋顶','其他','不清楚'])+s('供暖方式','供暖方式',['燃气','电力','燃油','热泵','其他'])+f('电路更新时间','电路更新时间','text',false,'年份或“不清楚”')+f('水管更新时间','水管更新时间','text',false,'年份或“不清楚”')+f('暖通系统更新时间','暖通更新时间','text',false,'年份或“不清楚”')+s('是否有游泳池','游泳池',['否','是'])+s('是否有蹦床','蹦床',['否','是'])+s('是否养狗','养狗',['否','是'])+f('狗的品种','狗的品种')+s('是否有报警或监控系统','安防系统',['否','是'])
+)+sec(4,'保障需求',
+f('预计房屋重建价值','房屋重建价值','text',false,'不清楚可留空')+f('希望免赔额','希望免赔额','text',false,'例如 $1,000 或 1%')+s('是否需要洪水保险','洪水保险',['否','是','不确定'])+s('是否需要汽车捆绑报价','汽车捆绑',['否','是'])+f('贷款银行名称（如有）','贷款银行名称')
+)+history(5,'5');
+const commercialBase=(restaurant)=>common()+sec(2,'企业信息',
+f('公司法定名称','公司法定名称','text',true)+f('DBA / 店名（如有）','DBA')+s('法律实体','法律实体',['个体户 Sole Proprietorship','合伙 Partnership','LLC','S Corporation','C Corporation','其他'],true)+f('开业年份','开业年份','number',true)+f('营业地址（街道、城市、州）','营业地址','text',true,'街道、城市、州',true)+z('营业地址-邮编')+(restaurant?s('餐饮类型','餐饮类型',['中餐','美式餐厅','墨西哥 / 拉美餐厅','咖啡店','烘焙店','披萨店','快餐 / 外卖','酒吧 / 酒馆','其他'],true):s('行业类别','行业类别',['零售商店','办公室','美容 / 美发','电工','水管','HVAC 暖通','室内油漆','地板安装','木工','混凝土施工','其他'],true))
+)+sec(3,'经营情况',
+f('预计年销售额','年销售额','text',true,'$')+f('全职员工人数','全职员工数','number')+f('兼职员工人数','兼职员工数','number')+f('年工资总额','年工资总额','text',false,'承包商请填写')+(!restaurant?f('分包工作比例','分包比例','text',false,'例如 10%'):'')+s('营业场所','营业场所',['租赁','自有'],true)+f('营业面积（平方英尺）','营业面积','number',true)+f('建筑年份','建筑年份','number',true)+s('建筑结构','建筑结构',['木结构 Frame','砖木 Joisted Masonry','砖混不可燃','不可燃','防火结构','不清楚'])+s('自动喷淋系统','自动喷淋系统',['否','是'])+f('设备、装修及库存价值','商业动产价值','text',false,'$')
+);
+const business=()=>commercialBase(false)+sec(4,'保障需求',
+s('需要的险种','需要的险种',['BOP 商业业主保单','一般责任险','商业财产险','商业车险','租用及非自有车险','不确定，请帮我比较'],true)+s('每次事故责任限额','责任限额',['$300,000','$500,000','$1,000,000','$2,000,000','不确定'])+f('希望免赔额','希望免赔额','text',false,'例如 $500 或 $1,000')+s('是否使用商业车辆','使用商业车辆',['否','是'])+ta('业务内容与主要工作范围','业务说明','请说明销售什么产品或提供什么服务',true)
+)+history(5);
+const restaurant=()=>commercialBase(true)+sec(4,'餐饮经营细节',
+f('酒类销售占总销售额比例','酒类销售比例','text',false,'例如 10%；不卖酒填 0')+s('是否使用明火或油炸设备','明火或油炸',['否','是'],true)+s('是否晚上11点后营业','晚上11点后营业',['否','是'],true)+s('是否提供外出餐饮服务','外出餐饮',['否','是'])+s('是否提供外送','外送服务',['否','是'])+s('是否有符合规范的排烟罩及灭火系统','排烟灭火系统',['否','是','不清楚'],true)+d('灭火系统最近保养日期','灭火系统保养日期')+f('店内座位数','座位数','number')
+)+sec(5,'保障需求',
+s('需要的险种','需要的险种',['餐馆 BOP','一般责任险','商业财产险','酒类责任险','商业车险','不确定，请帮我比较'],true)+s('每次事故责任限额','责任限额',['$300,000','$500,000','$1,000,000','$2,000,000','不确定'])+f('希望免赔额','希望免赔额','text',false,'例如 $500 或 $1,000')
+)+history(6);
+const truck=()=>common()+sec(2,'企业与营运权',
+f('公司法定名称','公司法定名称','text',true)+s('法律实体','法律实体',['LLC','S Corporation','C Corporation','个体户 Sole Proprietorship','合伙 Partnership'],true)+f('USDOT 号','USDOT号','text',true)+f('MC 号（如有）','MC号')+f('企业地址（街道、城市、州）','企业地址','text',true,'街道、城市、州',true)+z('企业地址-邮编')+s('运营类型','运营类型',['自有运权 For-Hire','自用 Private Carrier','挂靠车主 Leased Owner-Operator'],true)+f('经营年限','经营年限','number',true)
+)+sec(3,'驾驶员','<div class="field full"><div id="drivers"></div><button class="add-btn" type="button" data-add="truckDriver"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>添加驾驶员</button><p class="hint">无需填写驾照号码。</p></div>')+sec(4,'车辆','<div class="field full"><div id="vehicles"></div><button class="add-btn" type="button" data-add="truckVehicle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>添加车辆</button></div>')+sec(5,'运营情况',
+s('运营半径','运营半径',['本地 50 英里以内','中程 51–200 英里','长途 200 英里以上'],true)+f('常跑州','常跑州','text',false,'例如 OH, IN, KY')+f('每车预计年里程','每车年里程','text')+f('主要货物类型','货物类型','text',true,'例如普货、冷藏、建材、运车、平板')+s('是否运输危险品','危险品',['否','是'],true)+s('是否拖别人的挂车','拖他人挂车',['否','是'])
+)+sec(6,'保障需求',
+s('车辆责任险保额','车辆责任险保额',['$750,000','$1,000,000','其他 / 不确定'],true)+s('货物险保额','货物险保额',['$100,000','$250,000','$500,000','不需要','不确定'])+s('是否需要车损险','车损险',['否','是'])+s('车损免赔额','车损免赔额',['$1,000','$2,500','$5,000','$10,000','不确定'])+s('是否需要非营运 / Bobtail 责任险','非营运责任险',['否','是','不确定'])
+)+history(7);
+const health=()=>sec(1,'联系人信息',
+f('First Name（名）','联系人-First Name','text',true,'请输入名')+f('Last Name（姓）','联系人-Last Name','text',true,'请输入姓')+dob('联系人-出生日期',true)+f('手机号码','电话','tel',true,'例如 614-555-1234')+f('电子邮箱','邮箱','email',true,'name@example.com')
+)+sec(2,'居住地址',
+f('地址（街道、城市、州）','地址','text',true,'街道、城市、州',true)+z('地址-邮编')+f('所在县（County）','所在县','text',true,'例如 Franklin County')
+)+sec(3,'家庭成员',
+f('家庭人数','家庭人数','number',true,'包括投保人')+'<div class="field full"><div id="householdMembers"></div><button class="add-btn" type="button" data-add="healthMember"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>添加家庭成员</button><p class="hint">请列出需要纳入咨询的每位家庭成员，包括投保人。</p></div>'
+)+sec(4,'保险与收入信息',
+f('预计家庭年收入（用于补贴）','预计家庭年收入','text',true,'$')+s('是否吸烟','是否吸烟',['否','是'],true)+ta('现有保险情况','现有保险情况','请填写目前是否有医疗保险、保险类型及到期时间')+policyExpiration()+mdY('希望生效日期','希望生效日期',true)
+);
+const today=new Date();
+const coverageYear=today.getMonth()>=10?today.getFullYear()+1:today.getFullYear();
+const aca=()=>sec(1,'主投保人',
+f('First Name（名）','联系人-First Name','text',true,'请输入名')+f('Last Name（姓）','联系人-Last Name','text',true,'请输入姓')+dob('联系人-出生日期',true)+s('性别','联系人-性别',['女','男'],true)+f('手机号码','电话','tel',true,'例如 614-555-1234')+f('电子邮箱','邮箱','email',true,'name@example.com')
+)+sec(2,'居住地址',
+f('地址（街道、城市、州）','地址','text',true,'街道、城市、州',true)+z('地址-邮编')+f('所在县（County）','所在县','text',true,'例如 Franklin County')
+)+sec(3,'保费补助',
+s('是否想查看是否符合保费补助','是否查看保费补助',['否','是'],true)
+)+sec(4,'需投保家庭成员',
+'<div class="field full"><div id="acaMembers"></div><button class="add-btn" type="button" data-add="acaMember"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>添加需投保家庭成员</button></div>'
+)+sec(5,'家庭与收入',
+f('报税家庭人数','报税家庭人数','number',true,'包括报税人、配偶及受抚养人')+f('家庭年税前收入','家庭年税前收入','text',true,'$')+'<div class="field full"><span class="legend">希望哪年生效<span class="req">*</span></span><div class="choice-row"><label><input type="radio" name="希望哪年生效" value="2026" required><span>2026</span></label><label><input type="radio" name="希望哪年生效" value="2027" required><span>2027</span></label></div></div>'
+)+sec(6,'参保原因与预计使用量',
+s('特殊参保原因（Qualifying Life Event）','特殊参保原因',['失去 / 将失去保险','家庭人数变化','搬家','其他','无'],true)+s('预计每年医疗使用量','预计每年医疗使用量',['低','中','高'],true)+policyExpiration()
+)+sec(7,'医疗服务偏好（选填）',
+ta('常用医生 / 药房 / 医院','常用医疗服务机构','请填写常用医生、药房或医院名称，如没有，请填“无”')+ta('常用处方药','常用处方药','请填写药名、剂量和使用频率')
+);const medicare=()=>sec(1,'联系人信息',
+f('First Name（名）','联系人-First Name','text',true,'请输入名')+f('Last Name（姓）','联系人-Last Name','text',true,'请输入姓')+dob('联系人-出生日期',true)+f('手机号码','电话','tel',true,'例如 614-555-1234')+f('电子邮箱','邮箱','email',true,'name@example.com')
+)+sec(2,'居住地址',
+f('地址（街道、城市、州）','地址','text',true,'街道、城市、州',true)+z('地址-邮编')+f('县 County','县','text',true,'例如 Franklin County')
+)+sec(3,'Medicare 资格与现有保障',
+s('是否已满65岁','是否已满65岁',['否','是'],true)+mdY('转65岁日期','转65岁日期')+mdY('Medicare Part A 生效日期','Part A生效日期')+mdY('Medicare Part B 生效日期','Part B生效日期')+s('现有 Medicare coverage 类型','现有Medicare Coverage',['尚未参保','Original Medicare','Medicare Advantage','Medigap','Part D','不确定'],true)+policyExpiration()
+)+sec(4,'医生、处方药与产品需求',
+ta('常用医生','常用医生','请填写医生姓名、专科和诊所名称')+ta('常用处方药','常用处方药','请填写药名、剂量和使用频率')+'<div class="field full"><span class="legend">想了解的产品</span><div class="choice-row"><label><input type="checkbox" name="想了解的产品" value="Medicare Advantage"><span>Medicare Advantage</span></label><label><input type="checkbox" name="想了解的产品" value="Medigap"><span>Medigap</span></label><label><input type="checkbox" name="想了解的产品" value="Part D"><span>Part D</span></label></div></div>'
+);
+
+const builders={auto,home,business,restaurant,truck,health,medicare,aca};
+let currentType='',counts={driver:0,autoVehicle:0,truckDriver:0,truckVehicle:0,healthMember:0,acaMember:0};
+const grid=document.getElementById('typeGrid'),shell=document.getElementById('formShell'),content=document.getElementById('formContent'),form=document.getElementById('quoteForm'),result=document.getElementById('result');
+
+function choose(type){
+currentType=type;counts={driver:0,autoVehicle:0,truckDriver:0,truckVehicle:0,healthMember:0,acaMember:0};
+document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('selected',b.dataset.type===type));
+document.getElementById('formTitle').textContent=titles[type][0];document.getElementById('formSubtitle').textContent=titles[type][1];
+content.innerHTML=builders[type]();shell.classList.add('active');result.classList.remove('active');form.classList.remove('hidden');document.getElementById('errorBox').classList.remove('show');document.getElementById('submitStatus').classList.remove('show');
+if(type==='auto'){addRepeat('driver');addRepeat('autoVehicle')} if(type==='truck'){addRepeat('truckDriver');addRepeat('truckVehicle')} if(type==='health')addRepeat('healthMember'); if(type==='aca')addRepeat('acaMember');
+shell.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function repeatFields(kind,n){
+const head=kind==='healthMember'?`家庭成员 ${n}`:(kind==='acaMember'?`需投保家庭成员 ${n}`:(kind.includes('Vehicle')?`车辆 ${n}`:`驾驶员 ${n}`));
+let html='';
+if(kind==='healthMember') html=f('姓名',`家庭成员${n}-姓名`,'text',true,'请输入姓名')+dob(`家庭成员${n}-出生日期`,true)+s('与投保人关系',`家庭成员${n}-与投保人关系`,['本人','配偶','子女','父母','其他'],true);
+if(kind==='acaMember') html=f('姓名',`需投保家庭成员${n}-姓名`,'text',true,'请输入姓名')+s('与投保人关系',`需投保家庭成员${n}-与投保人关系`,['本人','配偶','子女','父母','其他'],true)+dob(`需投保家庭成员${n}-出生日期`,true)+s('性别',`需投保家庭成员${n}-性别`,['女','男'],true);
+if(kind==='driver') html=f('First Name（名）',`驾驶员${n}-First Name`,'text',true,'请输入名')+f('Last Name（姓）',`驾驶员${n}-Last Name`,'text',true,'请输入姓')+dob(`驾驶员${n}-出生日期`,true)+s('与投保人关系',`驾驶员${n}-关系`,['本人','配偶','子女','父母','其他'],true)+f('驾照所在州',`驾驶员${n}-驾照州`,'text',true,'例如 OH')+f('在美国驾龄（年）',`驾驶员${n}-在美国驾龄`,'number')+f('近3年事故或违章',`驾驶员${n}-事故违章`,'text',false,'没有请填“无”');
+if(kind==='autoVehicle') html=f('年款',`车辆${n}-年款`,'number',true)+f('品牌',`车辆${n}-品牌`,'text',true,'例如 Toyota')+f('型号',`车辆${n}-型号`,'text',true,'例如 Camry')+f('VIN 车架号',`车辆${n}-VIN`)+'<p class="hint name-hint">可在挡风玻璃左下角、驾驶员侧车门框或车辆登记证上找到；也可以直接把现有保单发给我们，保单上有车架号。</p>'+s('车辆所有权',`车辆${n}-所有权`,['已付清','贷款中','租赁'],true)+s('主要用途',`车辆${n}-用途`,['上下班','日常使用','商务使用','休闲使用'],true)+f('预计年里程',`车辆${n}-年里程`,'number')+gz(`车辆${n}-停放邮编`,true);
+if(kind==='truckDriver') html=f('First Name（名）',`驾驶员${n}-First Name`,'text',true,'请输入名')+f('Last Name（姓）',`驾驶员${n}-Last Name`,'text',true,'请输入姓')+dob(`驾驶员${n}-出生日期`,true)+f('CDL 所在州',`驾驶员${n}-CDL州`,'text',true,'例如 OH')+f('CDL 驾龄',`驾驶员${n}-CDL驾龄`,'number',true)+f('近3年事故或违章',`驾驶员${n}-事故违章`,'text',false,'没有请填“无”',true);
+if(kind==='truckVehicle') html=f('年款',`车辆${n}-年款`,'number',true)+f('品牌',`车辆${n}-品牌`,'text',true)+f('型号',`车辆${n}-型号`,'text',true)+f('VIN 车架号',`车辆${n}-VIN`)+'<p class="hint name-hint">可在挡风玻璃左下角、驾驶员侧车门框或车辆登记证上找到；也可以直接把现有保单发给我们，保单上有车架号。</p>'+s('车型',`车辆${n}-车型`,['半挂牵引车','厢式货车','自卸车','平板车','挂车','其他'],true)+f('总重 GVW（磅）',`车辆${n}-GVW`,'text',true)+f('目前估值',`车辆${n}-估值`,'text',true,'$')+gz(`车辆${n}-停放邮编`,true);
+return `<div class="repeat" data-kind="${kind}"><div class="repeat-head"><h4>${head}</h4>${n>1?'<button class="remove" type="button">删除</button>':''}</div><div class="fields">${html}</div></div>`;
+}
+function addRepeat(kind){counts[kind]++;const holder=kind==='healthMember'?document.getElementById('householdMembers'):(kind==='acaMember'?document.getElementById('acaMembers'):(kind.includes('Vehicle')?document.getElementById('vehicles'):document.getElementById('drivers')));if(holder)holder.insertAdjacentHTML('beforeend',repeatFields(kind,counts[kind]));}
+function formatBirthDate(value){
+const digits=value.replace(/\D/g,'').slice(0,8);
+if(digits.length<=2)return digits;
+if(digits.length<=4)return `${digits.slice(0,2)}/${digits.slice(2)}`;
+return `${digits.slice(0,2)}/${digits.slice(2,4)}/${digits.slice(4)}`;
+}
+function isValidMaskedDate(value){
+const match=/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(\d{4})$/.exec(value);
+if(!match)return false;
+const month=Number(match[1]),day=Number(match[2]),year=Number(match[3]);
+if(year<1)return false;
+const leap=year%4===0&&(year%100!==0||year%400===0);
+const days=[31,leap?29:28,31,30,31,30,31,31,30,31,30,31];
+return day<=days[month-1];
+}
+grid.addEventListener('click',e=>{const b=e.target.closest('[data-type]');if(b)choose(b.dataset.type)});
+content.addEventListener('input',e=>{
+const input=e.target.closest('.date-mask');if(!input)return;
+input.removeAttribute('aria-invalid');
+const caret=input.selectionStart===null?input.value.length:input.selectionStart;
+const digitCaret=input.value.slice(0,caret).replace(/\D/g,'').length;
+input.value=formatBirthDate(input.value);
+const nextCaret=Math.min(input.value.length,digitCaret+(digitCaret>=2?1:0)+(digitCaret>=4?1:0));
+input.setSelectionRange(nextCaret,nextCaret);
+});
+content.addEventListener('keydown',e=>{
+const input=e.target.closest('.date-mask');if(!input||input.selectionStart!==input.selectionEnd)return;
+const caret=input.selectionStart;
+if(e.key==='Backspace'&&caret>0&&input.value[caret-1]==='/')input.setSelectionRange(caret-1,caret-1);
+if(e.key==='Delete'&&input.value[caret]==='/')input.setSelectionRange(caret+1,caret+1);
+});
+content.addEventListener('click',e=>{const add=e.target.closest('[data-add]');if(add)addRepeat(add.dataset.add);const rem=e.target.closest('.remove');if(rem)rem.closest('.repeat').remove()});
+content.addEventListener('change',e=>{
+const noPolicy=e.target.closest('[data-no-policy]');if(!noPolicy)return;
+const expiration=noPolicy.closest('.section').querySelector('input[name="保单到期日"]');if(!expiration)return;
+expiration.required=!noPolicy.checked;expiration.disabled=noPolicy.checked;
+if(noPolicy.checked){expiration.value='';expiration.removeAttribute('aria-invalid')}
+});
+document.getElementById('changeType').addEventListener('click',()=>{shell.classList.remove('active');result.classList.remove('active');document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('selected'));grid.scrollIntoView({behavior:'smooth',block:'center'})});
+document.getElementById('clearBtn').addEventListener('click',()=>{if(currentType)choose(currentType)});
+
+/* Formspree payload keys stay ASCII/English while the visible form labels remain multilingual. */
+const FIELD_KEY_MAP={
+'DBA':'dba','MC号':'mc_number','USDOT号':'usdot_number','企业地址':'business_address','企业地址-邮编':'business_zip','企业信息':'business_information',
+'全职员工数':'full_time_employees','公司法定名称':'legal_business_name','兼职员工数':'part_time_employees','分包比例':'subcontracted_work_percentage',
+'县':'county','商业动产价值':'business_personal_property_value','地址':'address','地址-邮编':'address_zip','家庭人数':'household_size',
+'家庭年税前收入':'annual_household_income_before_tax','层数':'stories','居住地址':'residential_address','居住地址-邮编':'residential_zip',
+'居住面积':'living_area_sq_ft','屋顶年份':'roof_replacement_year','希望免赔额':'preferred_deductible','希望生效日期':'requested_effective_date',
+'希望哪年生效':'requested_coverage_year','常跑州':'states_regularly_traveled','年工资总额':'annual_payroll','年销售额':'annual_sales',
+'座位数':'number_of_seats','建筑年份':'building_year','建造年份':'year_built','开业年份':'year_established','房屋地址':'property_address',
+'房屋地址-邮编':'property_zip','房屋重建价值':'estimated_replacement_cost','所在县':'county','报税家庭人数':'tax_household_size',
+'暖通更新时间':'hvac_update_year','每车年里程':'annual_mileage_per_vehicle','水管更新时间':'plumbing_update_year','狗的品种':'dog_breed',
+'现有保险公司':'current_insurance_company','电话':'phone','电路更新时间':'electrical_update_year','目前保费':'current_premium',
+'经营年限':'years_in_business','联系人-First Name':'contact_first_name','联系人-Last Name':'contact_last_name','联系人-出生日期':'contact_date_of_birth',
+'联系人-性别':'contact_gender','营业地址':'business_address','营业地址-邮编':'business_zip','营业面积':'business_area_sq_ft',
+'货物类型':'primary_cargo','贷款银行名称':'mortgage_lender','邮箱':'email','酒类销售比例':'alcohol_sales_percentage',
+'预计家庭年收入':'estimated_annual_household_income','保单到期日':'policy_expiration_date','灭火系统保养日期':'fire_suppression_service_date',
+'Part A生效日期':'medicare_part_a_effective_date','Part B生效日期':'medicare_part_b_effective_date','转65岁日期':'turning_65_date',
+'住房情况':'housing_status','使用商业车辆':'uses_commercial_vehicles','供暖方式':'heating_type','保障类型':'coverage_needed',
+'养狗':'has_dog','危险品':'transports_hazardous_materials','地下室':'basement','外出餐饮':'offers_catering','外墙结构':'exterior_construction',
+'外送服务':'offers_delivery','安防系统':'alarm_or_monitoring_system','屋顶材料':'roof_material','建筑结构':'building_construction',
+'房屋用途':'property_use','房屋类型':'property_type','拖他人挂车':'pulls_others_trailers','排烟灭火系统':'compliant_hood_fire_suppression',
+'明火或油炸':'uses_open_flame_or_fryer','是否吸烟':'tobacco_use','是否已满65岁':'age_65_or_older','是否查看保费补助':'check_premium_subsidy',
+'晚上11点后营业':'open_after_11_pm','曾被取消或拒续保':'canceled_or_denied_renewal','汽车捆绑':'auto_bundle_quote',
+'法律实体':'legal_entity','洪水保险':'needs_flood_insurance','游泳池':'has_swimming_pool','特殊参保原因':'qualifying_life_event',
+'现有Medicare Coverage':'current_medicare_coverage','目前责任限额':'current_liability_limits','自动喷淋系统':'automatic_sprinkler_system',
+'营业场所':'business_premises','行业类别':'industry','责任限额':'liability_limit_per_occurrence','货物险保额':'cargo_limit',
+'蹦床':'has_trampoline','车库':'garage','车损免赔额':'physical_damage_deductible','车损险':'needs_physical_damage_coverage',
+'车辆责任险保额':'auto_liability_limit','运营半径':'operating_radius','运营类型':'operating_type','近12个月保险中断':'coverage_lapse_past_12_months',
+'需要的险种':'coverage_type_needed','非营运责任险':'non_trucking_bobtail_liability','预计每年医疗使用量':'estimated_annual_medical_usage',
+'餐饮类型':'restaurant_type','业务说明':'business_activities_and_scope','常用医生':'preferred_doctors','常用医疗服务机构':'preferred_providers_pharmacy_hospital',
+'常用处方药':'prescription_medications','现有保险情况':'current_health_coverage','记录说明':'claims_accidents_cancellation_details',
+'其它问题':'additional_questions','无现有保单':'no_current_policy','想了解的产品':'products_of_interest'
+};
+function englishPayloadKey(key){
+if(key==='_subject'||key==='_gotcha'||key==='_replyto'||key==='_next')return key;
+if(FIELD_KEY_MAP[key])return FIELD_KEY_MAP[key];
+let match=key.match(/^近(\d+)年理赔$/);if(match)return `claims_last_${match[1]}_years`;
+match=key.match(/^驾驶员(\d+)-(First Name|Last Name|出生日期|关系|驾照州|在美国驾龄|CDL州|CDL驾龄|事故违章)$/);
+if(match){const parts={'First Name':'first_name','Last Name':'last_name','出生日期':'date_of_birth','关系':'relationship','驾照州':'license_state','在美国驾龄':'years_driving_in_us','CDL州':'cdl_state','CDL驾龄':'years_with_cdl','事故违章':'accidents_or_violations'};return `driver_${match[1]}_${parts[match[2]]}`}
+match=key.match(/^车辆(\d+)-(年款|品牌|型号|VIN|所有权|用途|年里程|停放邮编|车型|GVW|估值)$/);
+if(match){const parts={'年款':'year','品牌':'make','型号':'model','VIN':'vin','所有权':'ownership','用途':'primary_use','年里程':'annual_mileage','停放邮编':'garaging_zip','车型':'vehicle_type','GVW':'gvw_lb','估值':'current_value'};return `vehicle_${match[1]}_${parts[match[2]]}`}
+match=key.match(/^家庭成员(\d+)-(姓名|出生日期|与投保人关系)$/);
+if(match){const parts={'姓名':'name','出生日期':'date_of_birth','与投保人关系':'relationship_to_applicant'};return `household_member_${match[1]}_${parts[match[2]]}`}
+match=key.match(/^需投保家庭成员(\d+)-(姓名|出生日期|与投保人关系|性别)$/);
+if(match){const parts={'姓名':'name','出生日期':'date_of_birth','与投保人关系':'relationship_to_applicant','性别':'gender'};return `applicant_${match[1]}_${parts[match[2]]}`}
+return `field_${Array.from(key).map(char=>char.codePointAt(0).toString(16)).join('_')}`;
+}
+
+form.addEventListener('submit',function(e){
+const errorBox=document.getElementById('errorBox'),submitStatus=document.getElementById('submitStatus'),submitBtn=document.getElementById('submitBtn');
+const invalidDate=Array.from(form.querySelectorAll('.date-mask')).find(input=>(input.required||input.value.trim())&&!isValidMaskedDate(input.value.trim()));
+if(invalidDate){e.preventDefault();invalidDate.setAttribute('aria-invalid','true');errorBox.textContent=window.__quoteTranslate?window.__quoteTranslate('请输入完整且有效的日期（MM/DD/YYYY）。'):'请输入完整且有效的日期（MM/DD/YYYY）。';errorBox.classList.add('show');submitStatus.classList.remove('show');invalidDate.focus();invalidDate.scrollIntoView({behavior:'smooth',block:'center'});return}
+const invalid=form.querySelector(':invalid');
+if(invalid){e.preventDefault();errorBox.textContent=window.__quoteTranslate?window.__quoteTranslate('请先填写红色星号标注的必填项。'):'请先填写红色星号标注的必填项。';errorBox.classList.add('show');submitStatus.classList.remove('show');invalid.focus();invalid.scrollIntoView({behavior:'smooth',block:'center'});return}
+errorBox.classList.remove('show');submitStatus.classList.remove('show');
+const firstName=(form.elements['联系人-First Name']?.value||'').trim();
+const lastName=(form.elements['联系人-Last Name']?.value||'').trim();
+const email=(form.elements['邮箱']?.value||'').trim();
+const contact=`${firstName} ${lastName}`.trim()||'客户';
+document.getElementById('emailSubject').value=`【报价表】${titles[currentType][0]}-${contact}`;
+document.getElementById('emailReplyTo').value=email;
+Array.from(form.elements).forEach(field=>{
+if(!field.name||field.dataset.englishPayload==='true')return;
+field.name=englishPayloadKey(field.name);field.dataset.englishPayload='true';
+});
+const trText=s=>window.__quoteTranslate?window.__quoteTranslate(s):s;
+submitBtn.disabled=true;submitBtn.textContent=trText('正在提交…');
+});
+if(location.hash==='#thanks'){form.hidden=true;result.classList.add('active')}
+document.getElementById('newQuoteBtn').addEventListener('click',()=>{
+form.reset();form.hidden=false;form.classList.remove('hidden');shell.classList.remove('active');result.classList.remove('active');document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('selected'));if(location.hash==='#thanks')history.replaceState(null,'',location.pathname+location.search);grid.scrollIntoView({behavior:'smooth',block:'center'});
+});
+})();
+</script>
+<script>
+/* Multilingual presentation layer. Form field names and submission wiring intentionally stay unchanged. */
+(function(){
+const rows=[
+['Right Coverage, Right Price — 保得全，买得值','Right Coverage, Right Price','La cobertura adecuada, al precio adecuado','التغطية المناسبة بالسعر المناسب','सही कवरेज, सही कीमत'],
+["We've Got You Covered — 为您遮风挡雨","We've Got You Covered",'Estamos aquí para protegerle','أنت في حمايتنا','आपकी सुरक्षा हमारी ज़िम्मेदारी'],
+['请先选择您需要的报价','Choose the quote you need','Elija la cotización que necesita','اختر عرض التأمين الذي تحتاجه','अपनी आवश्यक बीमा कोटेशन चुनें'],
+['按提示填写并提交，资料会直接发送给保险顾问，我们将尽快联系您准备报价。','Follow the prompts and submit. Your information will go directly to an insurance advisor, who will contact you soon to prepare your quote.','Siga las indicaciones y envíe el formulario. Sus datos llegarán directamente a un asesor de seguros, quien se comunicará pronto para preparar su cotización.','اتبع التعليمات ثم أرسل النموذج. ستصل معلوماتك مباشرة إلى مستشار تأمين وسنتواصل معك قريبًا لإعداد عرض السعر.','निर्देशों के अनुसार भरकर भेजें। आपकी जानकारी सीधे बीमा सलाहकार को जाएगी और कोटेशन तैयार करने के लिए जल्द आपसे संपर्क किया जाएगा।'],
+['约 5–10 分钟','About 5–10 minutes','Aproximadamente 5–10 minutos','حوالي 5–10 دقائق','लगभग 5–10 मिनट'],
+['请放心填写：','Your privacy matters:','Su privacidad es importante:','خصوصيتك مهمة:','आपकी गोपनीयता महत्वपूर्ण है:'],
+['本表不收集社会安全号（SSN）、付款/银行信息或驾照号码。提交后，资料会经由 Web3Forms 安全发送至保险顾问邮箱。','This form does not collect Social Security numbers (SSNs), payment or banking information, or driver’s license numbers. After submission, your information is securely sent to the insurance advisor by Web3Forms.','Este formulario no recopila números de Seguro Social (SSN), información de pago o bancaria ni números de licencia de conducir. Al enviarlo, Web3Forms transmite sus datos de forma segura al asesor de seguros.','لا يجمع هذا النموذج أرقام الضمان الاجتماعي أو معلومات الدفع أو الحسابات المصرفية أو أرقام رخص القيادة. بعد الإرسال، ينقل Web3Forms معلوماتك بأمان إلى مستشار التأمين.','यह फ़ॉर्म सोशल सिक्योरिटी नंबर (SSN), भुगतान/बैंक जानकारी या ड्राइविंग लाइसेंस नंबर एकत्र नहीं करता। भेजने के बाद Web3Forms आपकी जानकारी सुरक्षित रूप से बीमा सलाहकार तक पहुँचाता है।'],
+['您提交的信息仅用于为您准备保险报价，我们将依据联邦《Gramm-Leach-Bliley 法案》及州保险隐私法规保护您的个人信息。','The information you submit will be used only to prepare your insurance quote. We protect your personal information in accordance with the federal Gramm-Leach-Bliley Act and applicable state insurance privacy laws.','La información que envíe se usará únicamente para preparar su cotización de seguro. Protegemos sus datos personales conforme a la ley federal Gramm-Leach-Bliley y las leyes estatales de privacidad de seguros aplicables.','ستُستخدم المعلومات التي ترسلها فقط لإعداد عرض التأمين الخاص بك. نحمي معلوماتك الشخصية وفقًا لقانون غرام-ليتش-بلايلي الفيدرالي وقوانين خصوصية التأمين المعمول بها في الولاية.','आपके द्वारा दी गई जानकारी केवल आपका बीमा कोटेशन तैयार करने के लिए उपयोग होगी। हम संघीय Gramm-Leach-Bliley Act और लागू राज्य बीमा गोपनीयता कानूनों के अनुसार आपकी व्यक्तिगत जानकारी की रक्षा करेंगे।'],
+['报价类型','Quote type','Tipo de cotización','نوع عرض التأمين','कोटेशन का प्रकार'],
+['汽车保险','Auto insurance','Seguro de auto','تأمين السيارات','ऑटो बीमा'],['个人车辆','Personal vehicles','Vehículos personales','مركبات شخصية','निजी वाहन'],
+['房屋保险','Home insurance','Seguro de vivienda','تأمين المنزل','गृह बीमा'],['自住房 / 出租房','Primary / rental home','Vivienda propia / de alquiler','منزل أساسي / مؤجر','स्वयं का / किराये का घर'],
+['商业保险','Business insurance','Seguro comercial','تأمين الأعمال','व्यवसाय बीमा'],['商铺 / 服务业','Retail / services','Comercios / servicios','متاجر / خدمات','दुकान / सेवाएँ'],
+['餐馆保险','Restaurant insurance','Seguro para restaurantes','تأمين المطاعم','रेस्तरां बीमा'],['餐饮 / 外卖','Dining / takeout','Restaurante / comida para llevar','مطعم / طلبات خارجية','भोजन / टेकआउट'],
+['卡车保险','Truck insurance','Seguro de camiones','تأمين الشاحنات','ट्रक बीमा'],['商业卡车','Commercial trucks','Camiones comerciales','شاحنات تجارية','व्यावसायिक ट्रक'],
+['医疗保险','Health insurance','Seguro médico','التأمين الصحي','स्वास्थ्य बीमा'],['个人 / 家庭','Individual / family','Individual / familiar','فردي / عائلي','व्यक्ति / परिवार'],
+['即将满65岁 / 65岁及以上','Turning 65 / age 65+','Próximo a cumplir 65 / 65+','على وشك بلوغ 65 / 65 فأكثر','65 होने वाले / 65 वर्ष या अधिक'],
+['奥巴马医保 (ACA)','ACA Marketplace insurance','Seguro ACA del Mercado','تأمين سوق ACA','ACA मार्केटप्लेस बीमा'],['Marketplace 计划','Marketplace plans','Planes del Mercado','خطط السوق','मार्केटप्लेस योजनाएँ'],
+['更换类型','Change type','Cambiar tipo','تغيير النوع','प्रकार बदलें'],['如果有其它问题，请留言。','If you have any other questions, please leave a message.','Si tiene alguna otra pregunta, déjenos un mensaje.','إذا كانت لديك أي أسئلة أخرى، فاترك لنا رسالة.','यदि आपके कोई अन्य प्रश्न हैं, तो कृपया संदेश छोड़ें।'],['最多150字','Up to 150 characters','Máximo 150 caracteres','بحد أقصى 150 حرفًا','अधिकतम 150 अक्षर'],['提交报价资料','Submit quote information','Enviar datos de cotización','إرسال معلومات العرض','कोटेशन जानकारी भेजें'],['清空重填','Clear and start over','Borrar y empezar de nuevo','مسح والبدء من جديد','साफ़ करके फिर भरें'],
+['请先填写红色星号标注的必填项。','Please complete the required fields marked with a red asterisk.','Complete los campos obligatorios marcados con un asterisco rojo.','يرجى إكمال الحقول المطلوبة المميزة بنجمة حمراء.','लाल तारे से चिह्नित आवश्यक फ़ील्ड भरें।'],
+['请输入完整且有效的日期（MM/DD/YYYY）。','Enter a complete, valid date in MM/DD/YYYY format.','Ingrese una fecha completa y válida en formato MM/DD/AAAA.','أدخل تاريخًا كاملاً وصحيحًا بالتنسيق شهر/يوم/سنة.','MM/DD/YYYY प्रारूप में पूरी और मान्य तिथि दर्ज करें।'],
+['提交成功！','Submitted successfully!','¡Enviado correctamente!','تم الإرسال بنجاح!','सफलतापूर्वक भेजा गया!'],['我们会尽快联系您准备报价。','We will contact you soon to prepare your quote.','Nos comunicaremos pronto para preparar su cotización.','سنتواصل معك قريبًا لإعداد عرض السعر.','कोटेशन तैयार करने के लिए हम जल्द आपसे संपर्क करेंगे।'],['再填写一份报价表','Complete another quote form','Completar otro formulario','إكمال نموذج عرض آخر','एक और कोटेशन फ़ॉर्म भरें'],
+['汽车保险报价','Auto insurance quote','Cotización de seguro de auto','عرض تأمين السيارات','ऑटो बीमा कोटेशन'],['个人汽车保险｜可添加多位驾驶员和多辆车','Personal auto insurance | Add multiple drivers and vehicles','Seguro de auto personal | Agregue varios conductores y vehículos','تأمين سيارات شخصي | أضف عدة سائقين ومركبات','व्यक्तिगत ऑटो बीमा | कई ड्राइवर और वाहन जोड़ें'],
+['房屋保险报价','Home insurance quote','Cotización de seguro de vivienda','عرض تأمين المنزل','गृह बीमा कोटेशन'],['自住房、出租房或度假屋','Primary, rental, or vacation home','Vivienda propia, de alquiler o vacacional','منزل أساسي أو مؤجر أو للعطلات','स्वयं का, किराये का या अवकाश घर'],
+['商业保险报价','Business insurance quote','Cotización de seguro comercial','عرض تأمين الأعمال','व्यवसाय बीमा कोटेशन'],['适用于商铺、办公室、服务业及承包商','For retail, offices, services, and contractors','Para comercios, oficinas, servicios y contratistas','للمتاجر والمكاتب والخدمات والمقاولين','दुकानों, कार्यालयों, सेवाओं और ठेकेदारों के लिए'],
+['餐馆保险报价','Restaurant insurance quote','Cotización de seguro para restaurantes','عرض تأمين المطاعم','रेस्तरां बीमा कोटेशन'],['适用于餐厅、咖啡店、烘焙店及其他餐饮业务','For restaurants, cafés, bakeries, and other food businesses','Para restaurantes, cafeterías, panaderías y otros negocios de alimentos','للمطاعم والمقاهي والمخابز وغيرها من أعمال الطعام','रेस्तरां, कैफ़े, बेकरी और अन्य खाद्य व्यवसायों के लिए'],
+['卡车保险报价','Truck insurance quote','Cotización de seguro de camiones','عرض تأمين الشاحنات','ट्रक बीमा कोटेशन'],['商业卡车｜可添加多位驾驶员和多辆车','Commercial trucks | Add multiple drivers and vehicles','Camiones comerciales | Agregue varios conductores y vehículos','شاحنات تجارية | أضف عدة سائقين ومركبات','व्यावसायिक ट्रक | कई ड्राइवर और वाहन जोड़ें'],
+['医疗保险报价','Health insurance quote','Cotización de seguro médico','عرض التأمين الصحي','स्वास्थ्य बीमा कोटेशन'],['个人或家庭医疗保险｜可添加多位家庭成员','Individual or family health insurance | Add multiple household members','Seguro médico individual o familiar | Agregue varios familiares','تأمين صحي فردي أو عائلي | أضف عدة أفراد من الأسرة','व्यक्ति या परिवार स्वास्थ्य बीमा | कई परिवार सदस्य जोड़ें'],
+['Medicare 报价','Medicare quote','Cotización de Medicare','عرض Medicare','Medicare कोटेशन'],['Medicare Advantage、Medigap 与 Part D','Medicare Advantage, Medigap, and Part D','Medicare Advantage, Medigap y Parte D','Medicare Advantage وMedigap والجزء D','Medicare Advantage, Medigap और Part D'],
+['奥巴马医保 (ACA) 报价','ACA Marketplace quote','Cotización del Mercado ACA','عرض سوق ACA','ACA मार्केटप्लेस कोटेशन'],['Marketplace 个人及家庭医疗保险｜可添加多位参保人','Marketplace individual and family health insurance | Add multiple applicants','Seguro médico individual y familiar del Mercado | Agregue varios solicitantes','تأمين السوق الصحي للأفراد والعائلات | أضف عدة متقدمين','मार्केटप्लेस व्यक्ति और परिवार स्वास्थ्य बीमा | कई आवेदक जोड़ें'],
+['联系人与生效日期','Contact and effective date','Contacto y fecha de vigencia','بيانات الاتصال وتاريخ السريان','संपर्क और प्रभावी तिथि'],['联系人信息','Contact information','Información de contacto','معلومات الاتصال','संपर्क जानकारी'],['First Name（名）','First name','Nombre','الاسم الأول','पहला नाम'],['Last Name（姓）','Last name','Apellido','اسم العائلة','उपनाम'],['请输入名','Enter first name','Ingrese el nombre','أدخل الاسم الأول','पहला नाम दर्ज करें'],['请输入姓','Enter last name','Ingrese el apellido','أدخل اسم العائلة','उपनाम दर्ज करें'],
+['须与驾照上的姓名一致 (Must be the same as your driver\'s license)','Must match the name on your driver’s license.','Debe coincidir con el nombre de su licencia de conducir.','يجب أن يطابق الاسم الموجود على رخصة القيادة.','नाम आपके ड्राइविंग लाइसेंस से मेल खाना चाहिए।'],
+['手机号码','Mobile phone','Teléfono móvil','رقم الهاتف المحمول','मोबाइल नंबर'],['例如 614-555-1234','Example: 614-555-1234','Ejemplo: 614-555-1234','مثال: 614-555-1234','उदाहरण: 614-555-1234'],['电子邮箱（选填）','Email (optional)','Correo electrónico (opcional)','البريد الإلكتروني (اختياري)','ईमेल (वैकल्पिक)'],['电子邮箱','Email','Correo electrónico','البريد الإلكتروني','ईमेल'],['希望生效日期','Requested effective date','Fecha de vigencia deseada','تاريخ السريان المطلوب','वांछित प्रभावी तिथि'],['希望哪年生效','Requested coverage year','Año de vigencia deseado','سنة بدء التغطية المطلوبة','वांछित कवरेज वर्ष'],['保单到期日','Policy expiration date','Fecha de vencimiento de la póliza','تاريخ انتهاء الوثيقة','पॉलिसी समाप्ति तिथि'],['无现有保单','No current policy','No tengo una póliza vigente','لا توجد وثيقة حالية','कोई मौजूदा पॉलिसी नहीं'],['灭火系统最近保养日期','Last fire-suppression service date','Última fecha de mantenimiento del sistema contra incendios','تاريخ آخر صيانة لنظام الإطفاء','अग्निशमन प्रणाली की पिछली सर्विस तिथि'],
+['月/日/年','MM/DD/YYYY','MM/DD/AAAA','شهر/يوم/سنة','माह/दिन/वर्ष'],['出生日期','Date of birth','Fecha de nacimiento','تاريخ الميلاد','जन्म तिथि'],['出生日期（月/日/年）','Date of birth (MM/DD/YYYY)','Fecha de nacimiento (MM/DD/AAAA)','تاريخ الميلاد (شهر/يوم/سنة)','जन्म तिथि (माह/दिन/वर्ष)'],['希望生效日期（月/日/年）','Requested effective date (MM/DD/YYYY)','Fecha de vigencia deseada (MM/DD/AAAA)','تاريخ السريان المطلوب (شهر/يوم/سنة)','वांछित प्रभावी तिथि (माह/दिन/वर्ष)'],['保单到期日（月/日/年）','Policy expiration date (MM/DD/YYYY)','Vencimiento de la póliza (MM/DD/AAAA)','انتهاء الوثيقة (شهر/يوم/سنة)','पॉलिसी समाप्ति (माह/दिन/वर्ष)'],['灭火系统最近保养日期（月/日/年）','Last fire-suppression service date (MM/DD/YYYY)','Mantenimiento del sistema contra incendios (MM/DD/AAAA)','صيانة نظام الإطفاء (شهر/يوم/سنة)','अग्निशमन सर्विस तिथि (माह/दिन/वर्ष)'],
+['现有保险与理赔记录','Current insurance and claims history','Seguro actual e historial de reclamos','التأمين الحالي وسجل المطالبات','वर्तमान बीमा और दावा इतिहास'],['现有保险公司','Current insurance company','Compañía de seguros actual','شركة التأمين الحالية','वर्तमान बीमा कंपनी'],['目前保费','Current premium','Prima actual','القسط الحالي','वर्तमान प्रीमियम'],['可填每月或每期金额','Enter a monthly or per-term amount','Indique el monto mensual o por período','أدخل المبلغ الشهري أو مبلغ كل مدة','मासिक या अवधि की राशि लिखें'],['是否曾被取消或拒绝续保','Ever canceled or denied renewal?','¿Alguna cancelación o rechazo de renovación?','هل سبق إلغاء الوثيقة أو رفض تجديدها؟','क्या कभी रद्द या नवीनीकरण से मना किया गया?'],['近3年是否有理赔或事故','Any claims or accidents in the past 3 years?','¿Reclamos o accidentes en los últimos 3 años?','هل توجد مطالبات أو حوادث خلال آخر 3 سنوات؟','पिछले 3 वर्षों में कोई दावा या दुर्घटना?'],['近5年是否有理赔或事故','Any claims or accidents in the past 5 years?','¿Reclamos o accidentes en los últimos 5 años?','هل توجد مطالبات أو حوادث خلال آخر 5 سنوات؟','पिछले 5 वर्षों में कोई दावा या दुर्घटना?'],['理赔、事故或取消情况说明','Claims, accidents, or cancellation details','Detalles de reclamos, accidentes o cancelaciones','تفاصيل المطالبات أو الحوادث أو الإلغاء','दावे, दुर्घटनाएँ या रद्दीकरण विवरण'],['请写日期、类型及大约金额；没有可不填','Include date, type, and approximate amount; leave blank if none','Incluya fecha, tipo y monto aproximado; deje en blanco si no corresponde','اكتب التاريخ والنوع والمبلغ التقريبي؛ اتركه فارغًا إن لم يوجد','तिथि, प्रकार और अनुमानित राशि लिखें; न हो तो खाली छोड़ें'],
+['请选择','Please select','Seleccione','يرجى الاختيار','कृपया चुनें'],['否','No','No','لا','नहीं'],['是','Yes','Sí','نعم','हाँ'],['不确定','Not sure','No estoy seguro','غير متأكد','निश्चित नहीं'],['不清楚','Not sure','No lo sé','غير معروف','पता नहीं'],['其他','Other','Otro','أخرى','अन्य'],['无','None','Ninguno','لا يوجد','कोई नहीं'],
+['保单与保障需求','Policy and coverage needs','Póliza y cobertura deseada','احتياجات الوثيقة والتغطية','पॉलिसी और कवरेज आवश्यकताएँ'],['保障需求','Coverage needs','Cobertura deseada','احتياجات التغطية','कवरेज आवश्यकताएँ'],['居住地址（街道、城市、州）','Residential address (street, city, state)','Dirección residencial (calle, ciudad, estado)','عنوان السكن (الشارع، المدينة، الولاية)','निवास पता (सड़क, शहर, राज्य)'],['街道、城市、州','Street, city, state','Calle, ciudad, estado','الشارع، المدينة، الولاية','सड़क, शहर, राज्य'],['ZIP Code / 邮编','ZIP code','Código postal','الرمز البريدي','ज़िप कोड'],['例如 43017','Example: 43017','Ejemplo: 43017','مثال: 43017','उदाहरण: 43017'],['住房情况','Housing status','Situación de vivienda','حالة السكن','आवास स्थिति'],['自有','Own','Propia','ملك','स्वयं का'],['租住','Rent','Alquiler','إيجار','किराये पर'],['与家人同住','Live with family','Vive con familiares','السكن مع العائلة','परिवार के साथ'],['需要的保障','Coverage needed','Cobertura necesaria','التغطية المطلوبة','आवश्यक कवरेज'],['全险（责任险 + 综合险 + 碰撞险）','Full coverage (liability + comprehensive + collision)','Cobertura completa (responsabilidad + integral + colisión)','تغطية شاملة (مسؤولية + شامل + تصادم)','पूर्ण कवरेज (देयता + व्यापक + टक्कर)'],['仅责任险','Liability only','Solo responsabilidad','مسؤولية فقط','केवल देयता'],['不确定，请帮我比较','Not sure—please help me compare','No estoy seguro; ayúdeme a comparar','غير متأكد، ساعدني في المقارنة','निश्चित नहीं—तुलना में मदद करें'],['目前责任限额','Current liability limits','Límites actuales de responsabilidad','حدود المسؤولية الحالية','वर्तमान देयता सीमा'],['5万/10万','50K/100K','50.000/100.000','٥٠٬٠٠٠/١٠٠٬٠٠٠','50,000/1,00,000'],['10万/30万','100K/300K','100.000/300.000','١٠٠٬٠٠٠/٣٠٠٬٠٠٠','1,00,000/3,00,000'],['25万/50万','250K/500K','250.000/500.000','٢٥٠٬٠٠٠/٥٠٠٬٠٠٠','2,50,000/5,00,000'],['希望免赔额','Preferred deductible','Deducible deseado','مبلغ التحمل المطلوب','वांछित डिडक्टिबल'],['例如 $500 或 $1,000','Example: $500 or $1,000','Ejemplo: $500 o $1,000','مثال: 500 أو 1,000 دولار','उदाहरण: $500 या $1,000'],['近12个月保险是否中断','Any coverage lapse in the past 12 months?','¿Interrupción de cobertura en los últimos 12 meses?','هل انقطعت التغطية خلال آخر 12 شهرًا؟','पिछले 12 महीनों में कवरेज रुका?'],
+['驾驶员','Drivers','Conductores','السائقون','ड्राइवर'],['添加驾驶员','Add driver','Agregar conductor','إضافة سائق','ड्राइवर जोड़ें'],['无需填写驾照号码。','Do not enter a driver’s license number.','No ingrese el número de licencia de conducir.','لا تدخل رقم رخصة القيادة.','ड्राइविंग लाइसेंस नंबर न लिखें।'],['车辆','Vehicles','Vehículos','المركبات','वाहन'],['添加车辆','Add vehicle','Agregar vehículo','إضافة مركبة','वाहन जोड़ें'],['删除','Remove','Eliminar','حذف','हटाएँ'],['在美国驾龄（年）','Years driving in the U.S.','Años conduciendo en EE. UU.','سنوات القيادة في الولايات المتحدة','अमेरिका में ड्राइविंग के वर्ष'],['近3年事故或违章','Accidents or violations in past 3 years','Accidentes o infracciones en los últimos 3 años','الحوادث أو المخالفات خلال آخر 3 سنوات','पिछले 3 वर्षों में दुर्घटना या उल्लंघन'],['没有请填“无”','Enter “None” if none','Escriba “Ninguno” si no hay','اكتب «لا يوجد» إن لم يوجد','न हो तो “कोई नहीं” लिखें'],['年款','Year','Año','السنة','वर्ष'],['品牌','Make','Marca','الشركة المصنعة','ब्रांड'],['型号','Model','Modelo','الطراز','मॉडल'],['VIN 车架号','VIN','VIN','رقم الهيكل VIN','VIN'],['可在挡风玻璃左下角、驾驶员侧车门框或车辆登记证上找到；也可以直接把现有保单发给我们，保单上有车架号。','Find it at the lower-left windshield, driver-side door frame, or registration; you may also send us your current policy, which lists the VIN.','Encuéntrelo en la esquina inferior izquierda del parabrisas, el marco de la puerta del conductor o el registro; también puede enviarnos su póliza actual, donde aparece el VIN.','يمكن العثور عليه أسفل يسار الزجاج الأمامي أو إطار باب السائق أو تسجيل المركبة؛ ويمكنك أيضًا إرسال وثيقتك الحالية التي تتضمن رقم الهيكل.','यह विंडशील्ड के नीचे बाईं ओर, ड्राइवर-साइड डोर फ्रेम या रजिस्ट्रेशन पर मिलता है; आप अपनी मौजूदा पॉलिसी भी भेज सकते हैं, जिसमें VIN होता है।'],['车辆所有权','Vehicle ownership','Propiedad del vehículo','ملكية المركبة','वाहन स्वामित्व'],['已付清','Paid off','Pagado','مدفوع بالكامل','पूरा भुगतान'],['贷款中','Financed','Financiado','ممول','ऋण पर'],['租赁','Leased','Arrendado','مؤجر','लीज़ पर'],['主要用途','Primary use','Uso principal','الاستخدام الأساسي','मुख्य उपयोग'],['上下班','Commuting','Traslado al trabajo','التنقل للعمل','काम पर आना-जाना'],['日常使用','Personal use','Uso diario','استخدام يومي','दैनिक उपयोग'],['商务使用','Business use','Uso comercial','استخدام تجاري','व्यवसाय उपयोग'],['休闲使用','Pleasure','Uso recreativo','استخدام ترفيهي','मनोरंजन उपयोग'],['预计年里程','Estimated annual mileage','Millaje anual estimado','الأميال السنوية المقدرة','अनुमानित वार्षिक माइलेज'],['停放地邮编','Garaging ZIP code','Código postal de estacionamiento','الرمز البريدي لمكان الوقوف','पार्किंग ज़िप कोड'],
+['房屋基本信息','Property basics','Información básica de la vivienda','معلومات العقار الأساسية','घर की मूल जानकारी'],['房屋地址（街道、城市、州）','Property address (street, city, state)','Dirección de la propiedad (calle, ciudad, estado)','عنوان العقار (الشارع، المدينة، الولاية)','संपत्ति पता (सड़क, शहर, राज्य)'],['房屋用途','Property use','Uso de la vivienda','استخدام العقار','घर का उपयोग'],['自住','Owner occupied','Ocupada por el propietario','سكن المالك','स्वयं निवास'],['出租','Rental','Alquiler','تأجير','किराये का'],['度假屋 / 第二住所','Vacation / second home','Casa vacacional / segunda vivienda','منزل عطلات / منزل ثانٍ','अवकाश / दूसरा घर'],['空置','Vacant','Desocupada','شاغر','खाली'],['正在购买','Under purchase','En proceso de compra','قيد الشراء','खरीदा जा रहा'],['房屋类型','Property type','Tipo de vivienda','نوع العقار','घर का प्रकार'],['独栋住宅','Single-family home','Casa unifamiliar','منزل مستقل','एकल परिवार घर'],['联排屋','Townhouse','Casa adosada','منزل متلاصق','टाउनहाउस'],['公寓 Condo','Condo','Condominio','شقة تمليك','कॉनडो'],['多户住宅','Multi-family home','Vivienda multifamiliar','منزل متعدد الوحدات','बहु-परिवार घर'],['活动房屋','Mobile home','Casa móvil','منزل متنقل','मोबाइल होम'],['建造年份','Year built','Año de construcción','سنة البناء','निर्माण वर्ष'],['居住面积（平方英尺）','Living area (sq. ft.)','Superficie habitable (pies²)','مساحة المعيشة (قدم مربع)','रहने का क्षेत्र (वर्ग फुट)'],['层数','Stories','Pisos','عدد الطوابق','मंज़िलें'],['是否有地下室','Basement','Sótano','القبو','तहखाना'],['未装修','Unfinished','Sin terminar','غير مشطب','अधूरा'],['部分装修','Partially finished','Parcialmente terminado','مشطب جزئيًا','आंशिक रूप से तैयार'],['全装修','Finished','Terminado','مشطب بالكامل','पूरी तरह तैयार'],['车库','Garage','Garaje','المرآب','गैरेज'],['1车位','1-car','1 vehículo','سيارة واحدة','1 कार'],['2车位','2-car','2 vehículos','سيارتان','2 कार'],['3车位及以上','3+ cars','3+ vehículos','3 سيارات فأكثر','3+ कार'],['独立车库','Detached garage','Garaje separado','مرآب منفصل','अलग गैरेज'],
+['建筑与设施','Construction and features','Construcción e instalaciones','البناء والمرافق','निर्माण और सुविधाएँ'],['外墙结构','Exterior construction','Construcción exterior','هيكل الجدران الخارجية','बाहरी निर्माण'],['木结构 Frame','Frame','Estructura de madera','هيكل خشبي','फ़्रेम'],['砖 / Masonry','Masonry','Mampostería','بناء حجري','मेसनरी'],['砖贴面','Brick veneer','Revestimiento de ladrillo','كسوة طوب','ईंट विनीयर'],['混合','Mixed','Mixta','مختلط','मिश्रित'],['屋顶更换年份','Roof replacement year','Año de reemplazo del techo','سنة استبدال السقف','छत बदलने का वर्ष'],['屋顶材料','Roof material','Material del techo','مادة السقف','छत सामग्री'],['沥青瓦','Asphalt shingle','Teja asfáltica','قرميد أسفلتي','अस्फाल्ट शिंगल'],['金属','Metal','Metal','معدن','धातु'],['瓦片','Tile','Teja','قرميد','टाइल'],['平屋顶','Flat roof','Techo plano','سقف مسطح','समतल छत'],['供暖方式','Heating type','Tipo de calefacción','نوع التدفئة','हीटिंग प्रकार'],['燃气','Gas','Gas','غاز','गैस'],['电力','Electric','Eléctrica','كهرباء','बिजली'],['燃油','Oil','Aceite','وقود زيتي','तेल'],['热泵','Heat pump','Bomba de calor','مضخة حرارية','हीट पंप'],['电路更新时间','Electrical update year','Año de actualización eléctrica','سنة تحديث الكهرباء','बिजली अपडेट वर्ष'],['水管更新时间','Plumbing update year','Año de actualización de tuberías','سنة تحديث السباكة','प्लंबिंग अपडेट वर्ष'],['暖通系统更新时间','HVAC update year','Año de actualización de HVAC','سنة تحديث التكييف والتدفئة','HVAC अपडेट वर्ष'],['年份或“不清楚”','Year or “Not sure”','Año o “No lo sé”','السنة أو «غير معروف»','वर्ष या “पता नहीं”'],['是否有游泳池','Swimming pool?','¿Piscina?','هل يوجد مسبح؟','स्विमिंग पूल?'],['是否有蹦床','Trampoline?','¿Trampolín?','هل توجد منصة قفز؟','ट्रैम्पोलिन?'],['是否养狗','Dog?','¿Tiene perro?','هل يوجد كلب؟','कुत्ता?'],['狗的品种','Dog breed','Raza del perro','سلالة الكلب','कुत्ते की नस्ल'],['是否有报警或监控系统','Alarm or monitoring system?','¿Sistema de alarma o vigilancia?','هل يوجد نظام إنذار أو مراقبة؟','अलार्म या निगरानी प्रणाली?'],['预计房屋重建价值','Estimated replacement cost','Costo estimado de reconstrucción','تكلفة إعادة البناء المقدرة','अनुमानित पुनर्निर्माण लागत'],['不清楚可留空','Leave blank if unsure','Déjelo en blanco si no lo sabe','اتركه فارغًا إن لم تكن متأكدًا','पता न हो तो खाली छोड़ें'],['例如 $1,000 或 1%','Example: $1,000 or 1%','Ejemplo: $1,000 o 1%','مثال: 1,000 دولار أو 1%','उदाहरण: $1,000 या 1%'],['是否需要洪水保险','Need flood insurance?','¿Necesita seguro contra inundaciones?','هل تحتاج إلى تأمين ضد الفيضانات؟','बाढ़ बीमा चाहिए?'],['是否需要汽车捆绑报价','Need an auto bundle quote?','¿Desea cotización combinada con auto?','هل تحتاج إلى عرض مجمع مع تأمين السيارة؟','ऑटो बंडल कोटेशन चाहिए?'],['贷款银行名称（如有）','Mortgage lender (if any)','Banco hipotecario (si corresponde)','اسم جهة الرهن (إن وجدت)','बंधक ऋणदाता (यदि कोई हो)'],
+['企业信息','Business information','Información de la empresa','معلومات الشركة','व्यवसाय जानकारी'],['公司法定名称','Legal business name','Nombre legal de la empresa','الاسم القانوني للشركة','कानूनी व्यवसाय नाम'],['DBA / 店名（如有）','DBA / trade name (if any)','DBA / nombre comercial (si corresponde)','الاسم التجاري DBA (إن وجد)','DBA / व्यापारिक नाम (यदि कोई हो)'],['法律实体','Legal entity','Entidad legal','الكيان القانوني','कानूनी इकाई'],['个体户 Sole Proprietorship','Sole proprietorship','Propietario único','مؤسسة فردية','एकल स्वामित्व'],['合伙 Partnership','Partnership','Sociedad','شراكة','साझेदारी'],['开业年份','Year established','Año de inicio','سنة التأسيس','स्थापना वर्ष'],['营业地址（街道、城市、州）','Business address (street, city, state)','Dirección comercial (calle, ciudad, estado)','عنوان العمل (الشارع، المدينة، الولاية)','व्यवसाय पता (सड़क, शहर, राज्य)'],['餐饮类型','Restaurant type','Tipo de restaurante','نوع المطعم','रेस्तरां प्रकार'],['行业类别','Industry','Industria','القطاع','उद्योग'],['经营情况','Operations','Operaciones','العمليات','संचालन'],['预计年销售额','Estimated annual sales','Ventas anuales estimadas','المبيعات السنوية المقدرة','अनुमानित वार्षिक बिक्री'],['全职员工人数','Full-time employees','Empleados de tiempo completo','عدد الموظفين بدوام كامل','पूर्णकालिक कर्मचारी'],['兼职员工人数','Part-time employees','Empleados de medio tiempo','عدد الموظفين بدوام جزئي','अंशकालिक कर्मचारी'],['年工资总额','Annual payroll','Nómina anual','إجمالي الرواتب السنوية','वार्षिक पेरोल'],['承包商请填写','For contractors','Para contratistas','للمقاولين','ठेकेदारों के लिए'],['分包工作比例','Subcontracted work percentage','Porcentaje subcontratado','نسبة العمل من الباطن','उपठेका कार्य प्रतिशत'],['例如 10%','Example: 10%','Ejemplo: 10%','مثال: 10%','उदाहरण: 10%'],['营业场所','Business premises','Local comercial','مقر العمل','व्यवसाय परिसर'],['营业面积（平方英尺）','Business area (sq. ft.)','Área comercial (pies²)','مساحة العمل (قدم مربع)','व्यवसाय क्षेत्र (वर्ग फुट)'],['建筑年份','Building year','Año del edificio','سنة المبنى','भवन वर्ष'],['建筑结构','Building construction','Construcción del edificio','هيكل المبنى','भवन निर्माण'],['自动喷淋系统','Automatic sprinkler system','Sistema de rociadores automáticos','نظام رش آلي','स्वचालित स्प्रिंकलर प्रणाली'],['设备、装修及库存价值','Equipment, improvements, and inventory value','Valor de equipos, mejoras e inventario','قيمة المعدات والتحسينات والمخزون','उपकरण, सुधार और इन्वेंटरी मूल्य'],['需要的险种','Coverage type needed','Tipo de cobertura necesaria','نوع التغطية المطلوبة','आवश्यक बीमा प्रकार'],['每次事故责任限额','Per-occurrence liability limit','Límite de responsabilidad por incidente','حد المسؤولية لكل حادث','प्रति घटना देयता सीमा'],['是否使用商业车辆','Use commercial vehicles?','¿Usa vehículos comerciales?','هل تستخدم مركبات تجارية؟','व्यावसायिक वाहन उपयोग करते हैं?'],['业务内容与主要工作范围','Business activities and scope of work','Actividades y alcance del trabajo','أنشطة العمل ونطاقه','व्यवसाय गतिविधियाँ और कार्यक्षेत्र'],['请说明销售什么产品或提供什么服务','Describe products sold or services provided','Describa los productos o servicios','صف المنتجات أو الخدمات المقدمة','बेचे जाने वाले उत्पाद या सेवाएँ बताएँ'],
+['餐饮经营细节','Restaurant operations','Operaciones del restaurante','تفاصيل تشغيل المطعم','रेस्तरां संचालन'],['酒类销售占总销售额比例','Alcohol sales percentage','Porcentaje de ventas de alcohol','نسبة مبيعات الكحول','शराब बिक्री प्रतिशत'],['例如 10%；不卖酒填 0','Example: 10%; enter 0 if none','Ejemplo: 10%; escriba 0 si no vende alcohol','مثال: 10%؛ اكتب 0 إن لم تبع الكحول','उदाहरण: 10%; न बेचते हों तो 0'],['是否使用明火或油炸设备','Open flame or frying equipment?','¿Usa llama abierta o freidoras?','هل تستخدم لهبًا مكشوفًا أو معدات قلي؟','खुली आग या तलने का उपकरण?'],['是否晚上11点后营业','Open after 11 p.m.?','¿Abre después de las 11 p. m.?','هل تفتح بعد الساعة 11 مساءً؟','रात 11 बजे के बाद खुला?'],['是否提供外出餐饮服务','Catering service?','¿Ofrece catering?','هل تقدم خدمات تموين خارجي؟','कैटरिंग सेवा?'],['是否提供外送','Delivery service?','¿Ofrece entrega?','هل تقدم خدمة توصيل؟','डिलीवरी सेवा?'],['是否有符合规范的排烟罩及灭火系统','Compliant hood and fire-suppression system?','¿Campana y sistema contra incendios conformes?','هل يوجد غطاء تهوية ونظام إطفاء مطابقان؟','मानक हुड और अग्निशमन प्रणाली?'],['店内座位数','Number of seats','Número de asientos','عدد المقاعد','सीटों की संख्या'],
+['企业与营运权','Business and operating authority','Empresa y autoridad operativa','الشركة وسلطة التشغيل','व्यवसाय और संचालन प्राधिकरण'],['USDOT 号','USDOT number','Número USDOT','رقم USDOT','USDOT नंबर'],['MC 号（如有）','MC number (if any)','Número MC (si corresponde)','رقم MC (إن وجد)','MC नंबर (यदि कोई हो)'],['企业地址（街道、城市、州）','Business address (street, city, state)','Dirección de la empresa (calle, ciudad, estado)','عنوان الشركة (الشارع، المدينة، الولاية)','व्यवसाय पता (सड़क, शहर, राज्य)'],['运营类型','Operating type','Tipo de operación','نوع التشغيل','संचालन प्रकार'],['经营年限','Years in business','Años en operación','سنوات العمل','व्यवसाय के वर्ष'],['CDL 所在州','CDL state','Estado de CDL','ولاية CDL','CDL राज्य'],['例如 OH','Example: OH','Ejemplo: OH','مثال: OH','उदाहरण: OH'],['CDL 驾龄','Years with CDL','Años con CDL','سنوات خبرة CDL','CDL अनुभव वर्ष'],['车型','Vehicle type','Tipo de vehículo','نوع المركبة','वाहन प्रकार'],['总重 GVW（磅）','GVW (lb.)','GVW (lb)','الوزن الإجمالي GVW (رطل)','GVW (पाउंड)'],['目前估值','Current value','Valor actual','القيمة الحالية','वर्तमान मूल्य'],['运营情况','Operations','Operaciones','العمليات','संचालन'],['运营半径','Operating radius','Radio de operación','نطاق التشغيل','संचालन दायरा'],['常跑州','States regularly traveled','Estados donde opera','الولايات المعتادة','नियमित राज्य'],['例如 OH, IN, KY','Example: OH, IN, KY','Ejemplo: OH, IN, KY','مثال: OH, IN, KY','उदाहरण: OH, IN, KY'],['每车预计年里程','Estimated annual mileage per vehicle','Millaje anual por vehículo','الأميال السنوية لكل مركبة','प्रति वाहन वार्षिक माइलेज'],['主要货物类型','Primary cargo','Carga principal','نوع الحمولة الرئيسي','मुख्य माल'],['例如普货、冷藏、建材、运车、平板','Examples: general freight, refrigerated, building materials, auto transport, flatbed','Ej.: carga general, refrigerada, materiales, transporte de autos, plataforma','مثال: بضائع عامة أو مبردة أو مواد بناء أو نقل سيارات أو منصة','उदाहरण: सामान्य माल, रेफ्रिजरेटेड, निर्माण सामग्री, ऑटो ट्रांसपोर्ट, फ्लैटबेड'],['是否运输危险品','Transport hazardous materials?','¿Transporta materiales peligrosos?','هل تنقل مواد خطرة؟','खतरनाक सामग्री ढोते हैं?'],['是否拖别人的挂车','Pull trailers owned by others?','¿Remolca tráileres ajenos?','هل تسحب مقطورات يملكها آخرون؟','दूसरों के ट्रेलर खींचते हैं?'],['车辆责任险保额','Auto liability limit','Límite de responsabilidad vehicular','حد مسؤولية المركبة','वाहन देयता सीमा'],['货物险保额','Cargo limit','Límite de carga','حد تأمين الحمولة','कार्गो सीमा'],['不需要','Not needed','No se necesita','غير مطلوب','आवश्यक नहीं'],['是否需要车损险','Need physical damage coverage?','¿Necesita cobertura de daños físicos?','هل تحتاج إلى تغطية الأضرار المادية؟','फिजिकल डैमेज कवरेज चाहिए?'],['车损免赔额','Physical damage deductible','Deducible por daños físicos','مبلغ تحمل أضرار المركبة','फिजिकल डैमेज डिडक्टिबल'],['是否需要非营运 / Bobtail 责任险','Need non-trucking / Bobtail liability?','¿Necesita responsabilidad no comercial / Bobtail?','هل تحتاج إلى مسؤولية غير تجارية / Bobtail؟','नॉन-ट्रकिंग / Bobtail देयता चाहिए?'],
+['居住地址','Residential address','Dirección residencial','عنوان السكن','निवास पता'],['地址（街道、城市、州）','Address (street, city, state)','Dirección (calle, ciudad, estado)','العنوان (الشارع، المدينة، الولاية)','पता (सड़क, शहर, राज्य)'],['所在县（County）','County','Condado','المقاطعة','काउंटी'],['县 County','County','Condado','المقاطعة','काउंटी'],['例如 Franklin County','Example: Franklin County','Ejemplo: Franklin County','مثال: Franklin County','उदाहरण: Franklin County'],['家庭成员','Household members','Miembros del hogar','أفراد الأسرة','परिवार सदस्य'],['家庭人数','Household size','Tamaño del hogar','عدد أفراد الأسرة','परिवार का आकार'],['包括投保人','Include the applicant','Incluya al solicitante','يشمل مقدم الطلب','आवेदक सहित'],['添加家庭成员','Add household member','Agregar miembro del hogar','إضافة فرد من الأسرة','परिवार सदस्य जोड़ें'],['请列出需要纳入咨询的每位家庭成员，包括投保人。','List each household member to include in the consultation, including the applicant.','Indique cada miembro del hogar que debe incluirse, incluido el solicitante.','اذكر كل فرد من الأسرة يجب إدراجه في الاستشارة، بما في ذلك مقدم الطلب.','परामर्श में शामिल हर परिवार सदस्य को लिखें, आवेदक सहित।'],['保险与收入信息','Insurance and income','Seguro e ingresos','التأمين والدخل','बीमा और आय'],['预计家庭年收入（用于补贴）','Estimated annual household income (for subsidies)','Ingreso familiar anual estimado (para subsidios)','دخل الأسرة السنوي المقدر (للإعانات)','अनुमानित वार्षिक परिवार आय (सब्सिडी के लिए)'],['是否吸烟','Tobacco use?','¿Consume tabaco?','هل تستخدم التبغ؟','तंबाकू उपयोग?'],['现有保险情况','Current coverage','Cobertura actual','التغطية الحالية','वर्तमान कवरेज'],['请填写目前是否有医疗保险、保险类型及到期时间','Describe current health coverage, type, and expiration date','Describa su cobertura médica actual, tipo y vencimiento','اذكر التغطية الصحية الحالية ونوعها وتاريخ انتهائها','वर्तमान स्वास्थ्य कवरेज, प्रकार और समाप्ति बताएँ'],
+['保费补助','Premium assistance','Ayuda con la prima','مساعدة القسط','प्रीमियम सहायता'],['是否想查看是否符合保费补助','Check eligibility for premium assistance?','¿Desea verificar si califica para ayuda con la prima?','هل تريد التحقق من أهلية مساعدة القسط؟','प्रीमियम सहायता पात्रता जाँचें?'],['需要保险的人员','People needing coverage','Personas que necesitan cobertura','الأشخاص الذين يحتاجون إلى تغطية','कवरेज चाहने वाले लोग'],['添加需要保险的人员','Add person needing coverage','Agregar persona que necesita cobertura','إضافة شخص يحتاج إلى تغطية','कवरेज चाहने वाला व्यक्ति जोड़ें'],['主投保人','Primary applicant','Solicitante principal','مقدم الطلب الرئيسي','मुख्य आवेदक'],['需投保家庭成员','Family members to be covered','Familiares a asegurar','أفراد الأسرة المراد تأمينهم','कवर किए जाने वाले परिवार के सदस्य'],['添加需投保家庭成员','Add family member to be covered','Agregar familiar a asegurar','إضافة فرد أسرة للتأمين','कवर हेतु परिवार सदस्य जोड़ें'],['预计每年医疗使用量','Expected annual medical usage','Uso médico anual previsto','الاستخدام الطبي السنوي المتوقع','अपेक्षित वार्षिक चिकित्सा उपयोग'],['提交未确认，请检查网络后重试，或拨打 614-569-9025 联系我们。','Submission could not be confirmed. Check your connection and try again, or call us at 614-569-9025.','No se pudo confirmar el envío. Revise su conexión e inténtelo de nuevo, o llámenos al 614-569-9025.','تعذر تأكيد الإرسال. تحقق من الاتصال وحاول مرة أخرى، أو اتصل بنا على 614-569-9025.','भेजने की पुष्टि नहीं हो सकी। अपना कनेक्शन जाँचकर फिर प्रयास करें, या हमें 614-569-9025 पर कॉल करें।'],['家庭与收入','Household and income','Hogar e ingresos','الأسرة والدخل','परिवार और आय'],['报税家庭人数','Tax household size','Tamaño del hogar fiscal','حجم الأسرة الضريبية','टैक्स परिवार आकार'],['家庭年税前收入','Annual household income before tax','Ingreso familiar anual antes de impuestos','دخل الأسرة السنوي قبل الضريبة','वार्षिक कर-पूर्व परिवार आय'],['包括报税人、配偶及受抚养人','Include filer, spouse, and dependents','Incluya al declarante, cónyuge y dependientes','يشمل مقدم الإقرار والزوج/الزوجة والمعالين','करदाता, जीवनसाथी और आश्रितों सहित'],['参保原因与预计使用量','Enrollment reason and expected use','Motivo de inscripción y uso previsto','سبب التسجيل والاستخدام المتوقع','नामांकन कारण और अपेक्षित उपयोग'],['特殊参保原因（Qualifying Life Event）','Special enrollment reason (Qualifying Life Event)','Motivo de inscripción especial (evento de vida calificativo)','سبب التسجيل الخاص (حدث حياة مؤهل)','विशेष नामांकन कारण (Qualifying Life Event)'],['失去 / 将失去保险','Lost / will lose coverage','Perdió / perderá cobertura','فقدت / ستفقد التغطية','कवरेज खोया / खोने वाले हैं'],['家庭人数变化','Household size changed','Cambio en el tamaño del hogar','تغير حجم الأسرة','परिवार आकार बदला'],['搬家','Moved','Mudanza','انتقال','स्थानांतरण'],['低','Low','Bajo','منخفض','कम'],['中','Medium','Medio','متوسط','मध्यम'],['高','High','Alto','مرتفع','उच्च'],['医疗服务偏好（选填）','Healthcare preferences (optional)','Preferencias médicas (opcional)','تفضيلات الرعاية الصحية (اختياري)','स्वास्थ्य सेवा प्राथमिकताएँ (वैकल्पिक)'],['常用医生 / 药房 / 医院','Preferred doctors / pharmacy / hospital','Médicos / farmacia / hospital preferidos','الأطباء / الصيدلية / المستشفى المفضلون','पसंदीदा डॉक्टर / फ़ार्मेसी / अस्पताल'],['请填写常用医生、药房或医院名称，如没有，请填“无”','Enter preferred doctor, pharmacy, or hospital names; if none, enter “None”','Indique nombres de médicos, farmacia u hospital; si no tiene, escriba “Ninguno”','اكتب أسماء الأطباء أو الصيدلية أو المستشفى؛ إن لم يوجد فاكتب «لا يوجد»','पसंदीदा डॉक्टर, फ़ार्मेसी या अस्पताल के नाम लिखें; न हो तो “कोई नहीं” लिखें'],['常用处方药','Current prescriptions','Medicamentos recetados','الأدوية الموصوفة','नियमित दवाएँ'],['请填写药名、剂量和使用频率','Enter medication name, dose, and frequency','Indique medicamento, dosis y frecuencia','اكتب اسم الدواء والجرعة وتكرار الاستخدام','दवा का नाम, खुराक और आवृत्ति लिखें'],
+['Medicare 资格与现有保障','Medicare eligibility and current coverage','Elegibilidad de Medicare y cobertura actual','أهلية Medicare والتغطية الحالية','Medicare पात्रता और वर्तमान कवरेज'],['是否已满65岁','Age 65 or older?','¿Tiene 65 años o más?','هل عمرك 65 عامًا أو أكثر؟','65 वर्ष या अधिक?'],['转65岁日期','65th birthday','Fecha en que cumple 65','تاريخ بلوغ 65','65वाँ जन्मदिन'],['转65岁日期（月/日/年）','65th birthday (MM/DD/YYYY)','Fecha en que cumple 65 (MM/DD/AAAA)','تاريخ بلوغ 65 (شهر/يوم/سنة)','65वाँ जन्मदिन (माह/दिन/वर्ष)'],['Medicare Part A 生效日期','Medicare Part A effective date','Fecha de vigencia de Medicare Parte A','تاريخ سريان Medicare Part A','Medicare Part A प्रभावी तिथि'],['Medicare Part A 生效日期（月/日/年）','Medicare Part A effective date (MM/DD/YYYY)','Vigencia de Medicare Parte A (MM/DD/AAAA)','سريان Medicare Part A (شهر/يوم/سنة)','Medicare Part A प्रभावी तिथि (माह/दिन/वर्ष)'],['Medicare Part B 生效日期','Medicare Part B effective date','Fecha de vigencia de Medicare Parte B','تاريخ سريان Medicare Part B','Medicare Part B प्रभावी तिथि'],['Medicare Part B 生效日期（月/日/年）','Medicare Part B effective date (MM/DD/YYYY)','Vigencia de Medicare Parte B (MM/DD/AAAA)','سريان Medicare Part B (شهر/يوم/سنة)','Medicare Part B प्रभावी तिथि (माह/दिन/वर्ष)'],['现有 Medicare coverage 类型','Current Medicare coverage','Cobertura Medicare actual','تغطية Medicare الحالية','वर्तमान Medicare कवरेज'],['尚未参保','Not enrolled','Aún no inscrito','غير مسجل بعد','अभी नामांकित नहीं'],['医生、处方药与产品需求','Doctors, prescriptions, and plan needs','Médicos, medicamentos y planes','الأطباء والأدوية واحتياجات الخطط','डॉक्टर, दवाएँ और योजना आवश्यकताएँ'],['常用医生','Preferred doctors','Médicos preferidos','الأطباء المفضلون','पसंदीदा डॉक्टर'],['请填写医生姓名、专科和诊所名称','Enter doctor name, specialty, and clinic','Indique nombre, especialidad y clínica','اكتب اسم الطبيب والتخصص والعيادة','डॉक्टर का नाम, विशेषज्ञता और क्लिनिक'],['想了解的产品','Plans of interest','Planes de interés','الخطط التي تهمك','रुचि की योजनाएँ'],
+['姓名','Name','Nombre','الاسم','नाम'],['请输入姓名','Enter name','Ingrese el nombre','أدخل الاسم','नाम दर्ज करें'],['与投保人关系','Relationship to applicant','Relación con el solicitante','صلة القرابة بمقدم الطلب','आवेदक से संबंध'],['本人','Self','Titular','نفسه','स्वयं'],['配偶','Spouse','Cónyuge','الزوج/الزوجة','जीवनसाथी'],['子女','Child','Hijo/a','ابن/ابنة','बच्चा'],['父母','Parent','Padre/madre','والد/والدة','माता-पिता'],['年龄','Age','Edad','العمر','आयु'],['岁','Years','Años','سنوات','वर्ष'],['性别','Sex','Sexo','الجنس','लिंग'],['女','Female','Femenino','أنثى','महिला'],['男','Male','Masculino','ذكر','पुरुष'],
+['保险顾问联系方式','Insurance advisor contact information','Información de contacto del asesor de seguros','معلومات الاتصال بمستشار التأمين','बीमा सलाहकार की संपर्क जानकारी'],['您的保险经纪人 许飞华','Your insurance broker','Su agente de seguros','وسيط التأمين الخاص بك','आपकी बीमा ब्रोकर'],['工作电话：','Work phone:','Teléfono de trabajo:','هاتف العمل:','कार्य फ़ोन:'],['邮箱：','Email:','Correo electrónico:','البريد الإلكتروني:','ईमेल:'],['关注我们','Follow us','Síganos','تابعنا','हमें फ़ॉलो करें'],['扫码加微信','Scan to add us on WeChat','Escanee para agregarnos en WeChat','امسح الرمز لإضافتنا على WeChat','WeChat पर जोड़ने के लिए स्कैन करें'],['微信二维码','WeChat QR code','Código QR de WeChat','رمز WeChat للاستجابة السريعة','WeChat क्यूआर कोड'],
+['请勿填写此栏','Do not fill out this field','No complete este campo','لا تملأ هذا الحقل','यह फ़ील्ड न भरें'],['正在提交…','Submitting…','Enviando…','جارٍ الإرسال…','भेजा जा रहा है…'],['提交失败：','Submission failed: ','Error al enviar: ','فشل الإرسال: ','भेजना विफल: '],['网络错误：','Network error: ','Error de red: ','خطأ في الشبكة: ','नेटवर्क त्रुटि: '],['服务器返回状态码：','Server returned status: ','El servidor devolvió el estado: ','أعاد الخادم الحالة: ','सर्वर स्थिति: '],['提交失败（失败原因：请求被拦截）：','Submission failed (reason: request blocked): ','Error al enviar (motivo: solicitud bloqueada): ','فشل الإرسال (السبب: تم حظر الطلب): ','भेजना विफल (कारण: अनुरोध अवरुद्ध): '],['提交未确认（失败原因：请求超时），请检查网络后重试，或拨打 614-569-9025 联系我们。','Submission not confirmed (reason: request timed out). Please check your connection and try again, or call us at 614-569-9025.','Envío no confirmado (motivo: tiempo de espera agotado). Revise su conexión e inténtelo de nuevo, o llámenos al 614-569-9025.','لم يتم تأكيد الإرسال (السبب: انتهت مهلة الطلب). تحقق من الاتصال وحاول مرة أخرى، أو اتصل بنا على 614-569-9025.','सबमिशन की पुष्टि नहीं हुई (कारण: अनुरोध समय-समाप्त)। अपना कनेक्शन जांचकर फिर प्रयास करें, या हमें 614-569-9025 पर कॉल करें।'],['提交未确认（失败原因：网络错误），请检查网络后重试，或拨打 614-569-9025 联系我们。','Submission not confirmed (reason: network error). Please check your connection and try again, or call us at 614-569-9025.','Envío no confirmado (motivo: error de red). Revise su conexión e inténtelo de nuevo, o llámenos al 614-569-9025.','لم يتم تأكيد الإرسال (السبب: خطأ في الشبكة). تحقق من الاتصال وحاول مرة أخرى، أو اتصل بنا على 614-569-9025.','सबमिशन की पुष्टि नहीं हुई (कारण: नेटवर्क त्रुटि)। अपना कनेक्शन जांचकर फिर प्रयास करें, या हमें 614-569-9025 पर कॉल करें।']
+];
+const extra=[
+['中餐','Chinese restaurant','Restaurante chino','مطعم صيني','चीनी रेस्तरां'],['美式餐厅','American restaurant','Restaurante estadounidense','مطعم أمريكي','अमेरिकी रेस्तरां'],['墨西哥 / 拉美餐厅','Mexican / Latin American restaurant','Restaurante mexicano / latinoamericano','مطعم مكسيكي / لاتيني','मेक्सिकन / लैटिन अमेरिकी रेस्तरां'],['咖啡店','Café','Cafetería','مقهى','कैफ़े'],['烘焙店','Bakery','Panadería','مخبز','बेकरी'],['披萨店','Pizzeria','Pizzería','مطعم بيتزا','पिज़्ज़ा दुकान'],['快餐 / 外卖','Fast food / takeout','Comida rápida / para llevar','وجبات سريعة / طلبات خارجية','फास्ट फूड / टेकआउट'],['酒吧 / 酒馆','Bar / tavern','Bar / taberna','حانة','बार / टैवर्न'],
+['零售商店','Retail store','Tienda minorista','متجر بيع بالتجزئة','खुदरा दुकान'],['办公室','Office','Oficina','مكتب','कार्यालय'],['美容 / 美发','Beauty / hair salon','Belleza / peluquería','صالون تجميل / شعر','ब्यूटी / हेयर सैलून'],['电工','Electrician','Electricista','كهربائي','इलेक्ट्रीशियन'],['水管','Plumbing','Plomería','سباكة','प्लंबिंग'],['HVAC 暖通','HVAC','HVAC','تدفئة وتهوية وتكييف','HVAC'],['室内油漆','Interior painting','Pintura interior','دهان داخلي','इंटीरियर पेंटिंग'],['地板安装','Flooring installation','Instalación de pisos','تركيب أرضيات','फ़्लोरिंग इंस्टॉलेशन'],['木工','Carpentry','Carpintería','نجارة','बढ़ईगीरी'],['混凝土施工','Concrete work','Trabajo de concreto','أعمال خرسانية','कंक्रीट कार्य'],
+['租赁','Leased','Arrendado','مؤجر','लीज़ पर'],['自有','Owned','Propio','مملوك','स्वामित्व'],['木结构 Frame','Frame','Estructura de madera','هيكل خشبي','फ़्रेम'],['砖木 Joisted Masonry','Joisted masonry','Mampostería con vigas','بناء حجري بعوارض','जोइस्टेड मेसनरी'],['砖混不可燃','Masonry non-combustible','Mampostería no combustible','بناء حجري غير قابل للاشتعال','मेसनरी गैर-दहनशील'],['不可燃','Non-combustible','No combustible','غير قابل للاشتعال','गैर-दहनशील'],['防火结构','Fire resistive','Resistente al fuego','مقاوم للحريق','अग्निरोधी'],
+['BOP 商业业主保单','Business Owner’s Policy (BOP)','Póliza para propietarios de negocios (BOP)','وثيقة مالك الأعمال BOP','बिज़नेस ओनर पॉलिसी (BOP)'],['一般责任险','General liability','Responsabilidad civil general','المسؤولية العامة','सामान्य देयता'],['商业财产险','Commercial property','Propiedad comercial','الممتلكات التجارية','व्यावसायिक संपत्ति'],['商业车险','Commercial auto','Auto comercial','مركبات تجارية','व्यावसायिक ऑटो'],['租用及非自有车险','Hired and non-owned auto','Auto contratado y no propio','مركبات مستأجرة وغير مملوكة','किराये और गैर-स्वामित्व ऑटो'],['餐馆 BOP','Restaurant BOP','BOP para restaurantes','BOP للمطاعم','रेस्तरां BOP'],['酒类责任险','Liquor liability','Responsabilidad por alcohol','مسؤولية المشروبات الكحولية','शराब देयता'],
+['自有运权 For-Hire','For-hire authority','Autoridad para transporte contratado','سلطة نقل مقابل أجر','फॉर-हायर प्राधिकरण'],['自用 Private Carrier','Private carrier','Transportista privado','ناقل خاص','निजी वाहक'],['挂靠车主 Leased Owner-Operator','Leased owner-operator','Propietario-operador arrendado','مالك-مشغل مؤجر','लीज़्ड ओनर-ऑपरेटर'],['本地 50 英里以内','Local, within 50 miles','Local, hasta 50 millas','محلي، حتى 50 ميلاً','स्थानीय, 50 मील तक'],['中程 51–200 英里','Intermediate, 51–200 miles','Intermedio, 51–200 millas','متوسط، 51–200 ميل','मध्यम, 51–200 मील'],['长途 200 英里以上','Long haul, over 200 miles','Larga distancia, más de 200 millas','مسافات طويلة، أكثر من 200 ميل','लंबी दूरी, 200 मील से अधिक'],['半挂牵引车','Tractor','Tractocamión','شاحنة جر','ट्रैक्टर'],['厢式货车','Box truck','Camión caja','شاحنة صندوق','बॉक्स ट्रक'],['自卸车','Dump truck','Camión volquete','شاحنة قلابة','डंप ट्रक'],['平板车','Flatbed','Plataforma','شاحنة مسطحة','फ्लैटबेड'],['挂车','Trailer','Remolque','مقطورة','ट्रेलर'],['其他 / 不确定','Other / not sure','Otro / no estoy seguro','أخرى / غير متأكد','अन्य / निश्चित नहीं'],
+['Original Medicare','Original Medicare','Medicare Original','Medicare الأصلي','Original Medicare'],['不需要','Not needed','No se necesita','غير مطلوب','आवश्यक नहीं'],['低','Low','Bajo','منخفض','कम'],['中','Medium','Medio','متوسط','मध्यम'],['高','High','Alto','مرتفع','उच्च'],
+['· 邮箱：','· Email:','· Correo electrónico:','· البريد الإلكتروني:','· ईमेल:']
+];
+const langs=['zh','en','es','ar','hi'];
+const index={}; rows.concat(extra).forEach(r=>{index[r[0]]={zh:r[0],en:r[1],es:r[2],ar:r[3],hi:r[4]}});
+let lang='zh';
+const textSource=new WeakMap(),attrSource=new WeakMap();
+function dynamic(src,l){
+let m=src.match(/^家庭成员 (\d+)$/);if(m)return {zh:`家庭成员 ${m[1]}`,en:`Household member ${m[1]}`,es:`Miembro del hogar ${m[1]}`,ar:`فرد الأسرة ${m[1]}`,hi:`परिवार सदस्य ${m[1]}`}[l];
+m=src.match(/^需投保家庭成员 (\d+)$/);if(m)return {zh:`需投保家庭成员 ${m[1]}`,en:`Family member to be covered ${m[1]}`,es:`Familiar a asegurar ${m[1]}`,ar:`فرد الأسرة المراد تأمينه ${m[1]}`,hi:`कवर हेतु परिवार सदस्य ${m[1]}`}[l];
+m=src.match(/^驾驶员 (\d+)$/);if(m)return {zh:`驾驶员 ${m[1]}`,en:`Driver ${m[1]}`,es:`Conductor ${m[1]}`,ar:`السائق ${m[1]}`,hi:`ड्राइवर ${m[1]}`}[l];
+m=src.match(/^车辆 (\d+)$/);if(m)return {zh:`车辆 ${m[1]}`,en:`Vehicle ${m[1]}`,es:`Vehículo ${m[1]}`,ar:`المركبة ${m[1]}`,hi:`वाहन ${m[1]}`}[l];
+m=src.match(/^预计(\d{4})年家庭税前年收入$/);if(m)return {zh:`预计${m[1]}年家庭税前年收入`,en:`Estimated ${m[1]} household income before tax`,es:`Ingreso familiar estimado antes de impuestos en ${m[1]}`,ar:`دخل الأسرة المقدر قبل الضريبة لعام ${m[1]}`,hi:`अनुमानित ${m[1]} कर-पूर्व परिवार आय`}[l];
+m=src.match(/^预计(\d{4})年医疗使用量$/);if(m)return {zh:`预计${m[1]}年医疗使用量`,en:`Expected ${m[1]} healthcare use`,es:`Uso médico previsto en ${m[1]}`,ar:`الاستخدام الطبي المتوقع في ${m[1]}`,hi:`अपेक्षित ${m[1]} चिकित्सा उपयोग`}[l];
+return null;
+}
+function tr(src){return (index[src]&&index[src][lang])||dynamic(src,lang)||src}
+function translateNode(root){
+if(root.nodeType===Node.TEXT_NODE){let src=textSource.get(root);if(src===undefined){src=root.nodeValue;textSource.set(root,src)}const lead=(src.match(/^\s*/)||[''])[0],tail=(src.match(/\s*$/)||[''])[0],core=src.trim(),next=core?lead+tr(core)+tail:src;if(root.nodeValue!==next)root.nodeValue=next;return}
+if(root.nodeType!==Node.ELEMENT_NODE)return;
+if(root.closest&&root.closest('.language-switcher'))return;
+['placeholder','aria-label','title','data-label'].forEach(a=>{if(!root.hasAttribute(a))return;let store=attrSource.get(root);if(!store){store={};attrSource.set(root,store)}if(store[a]===undefined)store[a]=root.getAttribute(a);root.setAttribute(a,tr(store[a]))});
+Array.from(root.childNodes).forEach(translateNode);
+}
+function applyLanguage(next){
+lang=langs.includes(next)?next:'zh';document.documentElement.lang=lang==='zh'?'zh-CN':lang;document.title={zh:'保险报价信息表',en:'Insurance Quote Information Form',es:'Formulario de cotización de seguros',ar:'نموذج معلومات عرض التأمين',hi:'बीमा कोटेशन जानकारी फ़ॉर्म'}[lang];window.__quoteTranslate=tr;
+const shell=document.getElementById('formShell'),motto=document.querySelector('.brand-motto'),contact=document.querySelector('.contact');if(lang==='ar'){shell.setAttribute('dir','rtl');motto.setAttribute('dir','rtl');contact.setAttribute('dir','rtl')}else{shell.setAttribute('dir','ltr');motto.setAttribute('dir','ltr');contact.setAttribute('dir','ltr')}
+document.querySelectorAll('.language-switcher button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===lang)));
+translateNode(document.body);
+}
+document.querySelector('.language-switcher').addEventListener('click',e=>{const b=e.target.closest('[data-lang]');if(b)applyLanguage(b.dataset.lang)});
+const observer=new MutationObserver(records=>{records.forEach(r=>{r.addedNodes.forEach(n=>translateNode(n));if(r.type==='characterData')translateNode(r.target)})});
+observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+applyLanguage('zh');
+})();
+</script>
+</body>
+</html>
