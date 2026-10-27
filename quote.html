@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="artifact-version" content="2026.10.10.1545-ET">
+<meta name="artifact-version" content="2026.10.27.1504-ET">
 <link rel="icon" href="data:,">
 <title>保险报价信息表</title>
 <style>
@@ -111,6 +111,38 @@ a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%
 .contact[dir="rtl"] .social-row{direction:rtl}
 .build-version{margin:18px 0 0;color:var(--muted);font-size:11px;line-height:1.4;text-align:center}
 .hidden{display:none!important}
+.flow-bar{display:flex;gap:8px;margin:0 0 24px}
+.flow-step{flex:1;display:flex;align-items:center;gap:9px;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:11px 12px;font-size:13.5px;font-weight:700}
+.flow-num{flex:0 0 auto;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:12.5px}
+.next-steps{margin:2px 0 20px}
+.next-steps h3{font-size:16px;margin:0 0 12px;color:var(--ink)}
+.next-steps ol{list-style:none;margin:0;padding:0}
+.next-steps li{display:flex;gap:11px;margin-bottom:11px;font-size:14.5px}
+.next-steps .ns-num{flex:0 0 auto;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--success);color:#fff;font-size:12.5px;font-weight:800;margin-top:1px}
+.wizard-bar{display:none;margin:0 0 18px}
+.wizard-bar.active{display:block}
+.wizard-meta{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:7px}
+.wizard-track{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.wizard-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .25s}
+.quick-q{display:none;margin-bottom:6px}
+.quick-q.active{display:block}
+.quick-q h3{font-size:19px;margin:0 0 14px;font-family:Georgia,"Songti SC",serif}
+.quick-opts{display:grid;grid-template-columns:1fr;gap:9px}
+.quick-opt{appearance:none;text-align:left;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:8px;padding:15px 16px;font-size:16px;font-weight:700;cursor:pointer;min-height:52px}
+.quick-opt:hover{border-color:var(--gold)}
+.quick-opt:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%,transparent);outline-offset:2px}
+.quick-opt.selected{border-color:var(--gold);background:var(--gold-soft);box-shadow:inset 0 -3px 0 var(--gold)}
+.quick-skip{margin-top:12px}
+.wizard-nav{display:none;gap:10px;margin-top:20px}
+.wizard-nav.active{display:flex}
+.wizard-nav button{flex:1;border-radius:5px;padding:13px 19px;min-height:50px;font-weight:800;cursor:pointer;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink)}
+.wizard-nav .w-next{background:var(--gold);border-color:var(--gold);color:#17130a}
+.wizard-nav button[hidden]{display:none}
+.step-error{display:none;color:var(--danger);font-size:13.5px;font-weight:700;margin:12px 0 0}
+.step-error.show{display:block}
+.wstep-hidden{display:none!important}
+@media(max-width:720px){.flow-bar{flex-direction:column}.wizard-nav{flex-direction:row}}
+@media print{.wizard-nav,.wizard-bar,.flow-bar,.quick-q{display:none!important}.wstep-hidden{display:block!important}}
 @media(max-width:720px){
 .page{box-shadow:none}.language-switcher{justify-content:center;margin-bottom:18px}.language-switcher button{flex:1 1 calc(50% - 6px)}.brandbar{padding:10px 15px 12px;gap:8px;align-items:flex-start;flex-direction:column}.brandbar img{height:65px;width:267px;max-width:72vw}.brand-motto{width:100%;font-size:13px;line-height:1.35;text-align:center}.brand-motto span+span{margin-top:2px}main{padding:25px 16px 64px}.intro{grid-template-columns:1fr;gap:12px;padding-bottom:22px}.estimate{justify-self:start}.type-grid{grid-template-columns:repeat(2,1fr)}.form-head{margin-bottom:18px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.section{padding-top:21px}.actions{flex-direction:column}.actions button{width:100%}.result-actions{grid-template-columns:1fr}.result-actions button{width:100%}.contact{grid-template-columns:1fr;justify-content:stretch;gap:24px;margin-top:36px}.signature{padding-left:14px}.signature-name span{display:block;margin-top:2px}.social-panel{padding-left:17px;min-width:0}.contact[dir="rtl"] .social-panel{padding-left:0;padding-right:17px}}
 @media print{.brandbar,.type-grid,.eyebrow,.privacy,.change,.actions,.result-actions{display:none!important}.page{box-shadow:none}body{background:white;color:black}main{padding:0}.contact{break-inside:avoid}}
@@ -133,6 +165,12 @@ a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%
 <div><h1>请先选择您需要的报价</h1><p class="lede">按提示填写并提交，资料会直接发送给保险顾问，我们将尽快联系您准备报价。</p></div>
 <div class="estimate">约 5–10 分钟</div>
 </section>
+
+<div class="flow-bar" aria-label="How it works">
+<div class="flow-step"><span class="flow-num">1</span><span>填表约 30 秒</span></div>
+<div class="flow-step"><span class="flow-num">2</span><span>我们为您比价多家公司</span></div>
+<div class="flow-step"><span class="flow-num">3</span><span>顾问联系您确认细节</span></div>
+</div>
 
 <div class="privacy">
 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V7a6 6 0 0 1 12 0v3M5 10h14v11H5z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -169,6 +207,8 @@ a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%
 
 <section class="form-shell" id="formShell">
 <div class="form-head"><div><h2 id="formTitle"></h2><p id="formSubtitle"></p></div><button class="change" id="changeType" type="button">更换类型</button></div>
+<div class="wizard-bar" id="wizardBar"><div class="wizard-meta"><span id="wizardStepLabel"></span></div><div class="wizard-track"><div class="wizard-fill" id="wizardFill" style="width:0%"></div></div></div>
+<div class="quick-q" id="quickQ"><h3 id="quickQTitle"></h3><div class="quick-opts" id="quickOpts"></div><p class="quick-skip"><button class="change" id="quickSkip" type="button">跳过此题</button></p></div>
 <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
 <input type="hidden" name="access_key" value="f565e3eb-7a38-44e1-9f6e-66b64d27a64e">
 <input type="hidden" name="subject" id="emailSubject" value="【报价表】保险报价">
@@ -182,11 +222,18 @@ a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%
 <div class="actions"><button class="primary" id="submitBtn" type="submit">提交报价资料</button><button class="secondary" id="clearBtn" type="button">清空重填</button></div>
 <div class="submit-status" id="submitStatus" role="alert"></div>
 </form>
+<p class="step-error" id="stepError" role="alert">请先填写红色星号标注的必填项。</p>
+<div class="wizard-nav" id="wizardNav"><button type="button" id="wBack">上一步</button><button type="button" class="w-next" id="wNext">下一步</button></div>
 </section>
 
 <section class="result" id="result" aria-live="polite">
 <h2>提交成功！</h2>
 <p>我们会尽快联系您准备报价。</p>
+<div class="next-steps"><h3>接下来会发生什么：</h3><ol>
+<li><span class="ns-num">1</span><span>已收到：我们正在为您比较多家保险公司的报价。</span></li>
+<li><span class="ns-num">2</span><span>顾问会用 614-569-9025 联系您，请留意接听这个号码。</span></li>
+<li><span class="ns-num">3</span><span>如需补充材料，我们会一次性问全，不用您反复沟通。</span></li>
+</ol></div>
 <div class="result-actions"><button class="primary" id="newQuoteBtn" type="button">再填写一份报价表</button></div>
 </section>
 
@@ -213,7 +260,7 @@ a.social-item:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%
 </div>
 </div>
 </footer>
-<p class="build-version" aria-label="Current form version">Version 2026.10.10.1545 ET</p>
+<p class="build-version" aria-label="Current form version">Version 2026.10.27.1504 ET</p>
 </main>
 </div>
 
@@ -467,6 +514,9 @@ const rows=[
 ['请先填写红色星号标注的必填项。','Please complete the required fields marked with a red asterisk.','Complete los campos obligatorios marcados con un asterisco rojo.','يرجى إكمال الحقول المطلوبة المميزة بنجمة حمراء.','लाल तारे से चिह्नित आवश्यक फ़ील्ड भरें।'],
 ['请输入完整且有效的日期（MM/DD/YYYY）。','Enter a complete, valid date in MM/DD/YYYY format.','Ingrese una fecha completa y válida en formato MM/DD/AAAA.','أدخل تاريخًا كاملاً وصحيحًا بالتنسيق شهر/يوم/سنة.','MM/DD/YYYY प्रारूप में पूरी और मान्य तिथि दर्ज करें।'],
 ['提交成功！','Submitted successfully!','¡Enviado correctamente!','تم الإرسال بنجاح!','सफलतापूर्वक भेजा गया!'],['我们会尽快联系您准备报价。','We will contact you soon to prepare your quote.','Nos comunicaremos pronto para preparar su cotización.','سنتواصل معك قريبًا لإعداد عرض السعر.','कोटेशन तैयार करने के लिए हम जल्द आपसे संपर्क करेंगे।'],['再填写一份报价表','Complete another quote form','Completar otro formulario','إكمال نموذج عرض آخر','एक और कोटेशन फ़ॉर्म भरें'],
+['填表约 30 秒','Fill out the form — about 30 seconds','Complete el formulario: unos 30 segundos','املأ النموذج — حوالي 30 ثانية','फ़ॉर्म भरें — लगभग 30 सेकंड'],['我们为您比价多家公司','We compare quotes from multiple carriers for you','Comparamos cotizaciones de varias aseguradoras por usted','نقارن عروض أسعار عدة شركات تأمين من أجلك','हम आपके लिए कई बीमा कंपनियों के कोट्स की तुलना करते हैं'],['顾问联系您确认细节','An advisor contacts you to confirm the details','Un asesor se comunicará con usted para confirmar los detalles','يتواصل معك مستشار لتأكيد التفاصيل','एक सलाहकार विवरण की पुष्टि के लिए आपसे संपर्क करेगा'],
+['接下来会发生什么：','What happens next:','Qué sigue ahora:','ما الذي سيحدث بعد ذلك:','आगे क्या होगा:'],['已收到：我们正在为您比较多家保险公司的报价。','Received: we are now comparing quotes from multiple insurance companies for you.','Recibido: ya estamos comparando cotizaciones de varias aseguradoras para usted.','تم الاستلام: نقارن الآن عروض أسعار عدة شركات تأمين من أجلك.','प्राप्त हो गया: हम अब आपके लिए कई बीमा कंपनियों के कोट्स की तुलना कर रहे हैं।'],['顾问会用 614-569-9025 联系您，请留意接听这个号码。','Your advisor will call you from 614-569-9025 — please watch for this number.','Su asesor le llamará desde el 614-569-9025; esté atento a este número.','سيتصل بك مستشارك من الرقم 614-569-9025 — يرجى الانتباه لهذا الرقم.','आपके सलाहकार 614-569-9025 से कॉल करेंगे — कृपया इस नंबर पर ध्यान दें।'],['如需补充材料，我们会一次性问全，不用您反复沟通。','If we need anything else, we will ask for everything in one go — no back-and-forth.','Si necesitamos algo más, se lo pediremos todo de una vez, sin idas y vueltas.','إذا احتجنا إلى أي مستندات إضافية، فسنطلبها كلها دفعة واحدة، دون تكرار.','यदि हमें कुछ और चाहिए होगा, तो हम सब कुछ एक बार में ही पूछ लेंगे — बार-बार परेशान नहीं करेंगे।'],
+['上一步','Back','Atrás','السابق','पीछे'],['下一步','Next','Siguiente','التالي','आगे'],['跳过此题','Skip this question','Saltar esta pregunta','تخطَّ هذا السؤال','यह प्रश्न छोड़ें'],
 ['汽车保险报价','Auto insurance quote','Cotización de seguro de auto','عرض تأمين السيارات','ऑटो बीमा कोटेशन'],['个人汽车保险｜可添加多位驾驶员和多辆车','Personal auto insurance | Add multiple drivers and vehicles','Seguro de auto personal | Agregue varios conductores y vehículos','تأمين سيارات شخصي | أضف عدة سائقين ومركبات','व्यक्तिगत ऑटो बीमा | कई ड्राइवर और वाहन जोड़ें'],
 ['房屋保险报价','Home insurance quote','Cotización de seguro de vivienda','عرض تأمين المنزل','गृह बीमा कोटेशन'],['自住房、出租房或度假屋','Primary, rental, or vacation home','Vivienda propia, de alquiler o vacacional','منزل أساسي أو مؤجر أو للعطلات','स्वयं का, किराये का या अवकाश घर'],
 ['商业保险报价','Business insurance quote','Cotización de seguro comercial','عرض تأمين الأعمال','व्यवसाय बीमा कोटेशन'],['适用于商铺、办公室、服务业及承包商','For retail, offices, services, and contractors','Para comercios, oficinas, servicios y contratistas','للمتاجر والمكاتب والخدمات والمقاولين','दुकानों, कार्यालयों, सेवाओं और ठेकेदारों के लिए'],
@@ -513,6 +563,7 @@ let m=src.match(/^家庭成员 (\d+)$/);if(m)return {zh:`家庭成员 ${m[1]}`,e
 m=src.match(/^需投保家庭成员 (\d+)$/);if(m)return {zh:`需投保家庭成员 ${m[1]}`,en:`Family member to be covered ${m[1]}`,es:`Familiar a asegurar ${m[1]}`,ar:`فرد الأسرة المراد تأمينه ${m[1]}`,hi:`कवर हेतु परिवार सदस्य ${m[1]}`}[l];
 m=src.match(/^驾驶员 (\d+)$/);if(m)return {zh:`驾驶员 ${m[1]}`,en:`Driver ${m[1]}`,es:`Conductor ${m[1]}`,ar:`السائق ${m[1]}`,hi:`ड्राइवर ${m[1]}`}[l];
 m=src.match(/^车辆 (\d+)$/);if(m)return {zh:`车辆 ${m[1]}`,en:`Vehicle ${m[1]}`,es:`Vehículo ${m[1]}`,ar:`المركبة ${m[1]}`,hi:`वाहन ${m[1]}`}[l];
+m=src.match(/^第 (\d+) 步，共 (\d+) 步$/);if(m)return {zh:src,en:`Step ${m[1]} of ${m[2]}`,es:`Paso ${m[1]} de ${m[2]}`,ar:`الخطوة ${m[1]} من ${m[2]}`,hi:`चरण ${m[1]} / ${m[2]}`}[l];
 m=src.match(/^预计(\d{4})年家庭税前年收入$/);if(m)return {zh:`预计${m[1]}年家庭税前年收入`,en:`Estimated ${m[1]} household income before tax`,es:`Ingreso familiar estimado antes de impuestos en ${m[1]}`,ar:`دخل الأسرة المقدر قبل الضريبة لعام ${m[1]}`,hi:`अनुमानित ${m[1]} कर-पूर्व परिवार आय`}[l];
 m=src.match(/^预计(\d{4})年医疗使用量$/);if(m)return {zh:`预计${m[1]}年医疗使用量`,en:`Expected ${m[1]} healthcare use`,es:`Uso médico previsto en ${m[1]}`,ar:`الاستخدام الطبي المتوقع في ${m[1]}`,hi:`अपेक्षित ${m[1]} चिकित्सा उपयोग`}[l];
 return null;
@@ -535,6 +586,196 @@ document.querySelector('.language-switcher').addEventListener('click',e=>{const 
 const observer=new MutationObserver(records=>{records.forEach(r=>{r.addedNodes.forEach(n=>translateNode(n));if(r.type==='characterData')translateNode(r.target)})});
 observer.observe(document.body,{subtree:true,childList:true,characterData:true});
 (function(){var saved=null;try{saved=localStorage.getItem('fxcoverme-lang')}catch(err){}applyLanguage(saved||'en')})();
+})();
+</script>
+<script>
+/* Step-by-step wizard presentation layer (2026-10-27 upgrade).
+   Presentation only: the field set, field names and the Web3Forms submission wiring are unchanged.
+   Flow: Step 1 pick a quote type (existing type grid) -> Step 2 a few big-button questions
+   (answers are written into the existing form fields) -> remaining steps are the existing
+   form sections, one per screen, with the contact section moved to the last step. */
+(function(){
+var QUICK={
+auto:[['保障类型','需要的保障'],['住房情况','住房情况']],
+home:[['房屋用途','房屋用途'],['房屋类型','房屋类型']],
+business:[['行业类别','行业类别'],['需要的险种','需要的险种']],
+restaurant:[['餐饮类型','餐饮类型'],['需要的险种','需要的险种']],
+truck:[['运营类型','运营类型'],['运营半径','运营半径']],
+health:[['是否吸烟','是否吸烟']],
+medicare:[['是否已满65岁','是否已满65岁'],['现有Medicare Coverage','现有 Medicare coverage 类型']],
+aca:[['是否查看保费补助','是否想查看是否符合保费补助'],['特殊参保原因','特殊参保原因（Qualifying Life Event）']]
+};
+var INDUSTRY_ALIAS={'beauty':'美容 / 美发','salon':'美容 / 美发'};
+var form=document.getElementById('quoteForm'),shell=document.getElementById('formShell'),content=document.getElementById('formContent'),grid=document.getElementById('typeGrid');
+var bar=document.getElementById('wizardBar'),stepLabel=document.getElementById('wizardStepLabel'),fillEl=document.getElementById('wizardFill');
+var quickBox=document.getElementById('quickQ'),quickTitle=document.getElementById('quickQTitle'),quickOpts=document.getElementById('quickOpts'),quickSkip=document.getElementById('quickSkip');
+var nav=document.getElementById('wizardNav'),backBtn=document.getElementById('wBack'),nextBtn=document.getElementById('wNext'),stepError=document.getElementById('stepError');
+var myType='',steps=[],stepIdx=0,quickQs=[],quickIdx=0,industryPreset=null,knownSections=new WeakSet(),initializing=false;
+
+function sections(){return Array.from(content.querySelectorAll(':scope > .section'))}
+function tail(){
+var t=document.getElementById('formTail');
+if(t)return t;
+t=document.createElement('div');t.id='formTail';
+[document.getElementById('errorBox'),form.querySelector('.form-disclosure'),form.querySelector('.field.additional-note'),form.querySelector('.actions'),document.getElementById('submitStatus')].forEach(function(el){if(el)t.appendChild(el)});
+form.appendChild(t);
+return t;
+}
+function validDate(v){
+var m=/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(\d{4})$/.exec(v);if(!m)return false;
+var mo=+m[1],da=+m[2],ye=+m[3];if(ye<1)return false;
+var leap=ye%4===0&&(ye%100!==0||ye%400===0);
+var days=[31,leap?29:28,31,30,31,30,31,31,30,31,30,31];
+return da<=days[mo-1];
+}
+function stepInvalidField(el){
+var fields=Array.from(el.querySelectorAll('input,select,textarea')).filter(function(f){return !f.disabled&&f.type!=='hidden'});
+for(var i=0;i<fields.length;i++){var f=fields[i];
+if(f.required&&!f.checkValidity())return f;
+if(f.classList.contains('date-mask')&&(f.required||f.value.trim())&&!validDate(f.value.trim()))return f;
+}
+return null;
+}
+function buildQuick(){
+quickQs=[];
+(QUICK[myType]||[]).forEach(function(pair){
+var sel=form.querySelector('select[name="'+pair[0]+'"]');
+if(!sel)return;
+var opts=Array.from(sel.options).filter(function(o){return o.value!==''});
+if(opts.length)quickQs.push({name:pair[0],label:pair[1],select:sel,options:opts});
+});
+}
+function applyIndustryPreset(){
+if(!industryPreset)return;
+var zh=INDUSTRY_ALIAS[industryPreset]||industryPreset;
+var target=(window.__quoteTranslate?window.__quoteTranslate(zh):zh);
+quickQs.forEach(function(q){
+if(q.name!=='行业类别')return;
+q.options.forEach(function(o){if(o.value===target||o.textContent===target){q.select.value=o.value;}});
+});
+}
+function renderQuick(){
+var q=quickQs[quickIdx];
+if(!q)return;
+quickTitle.textContent=q.label;
+quickOpts.innerHTML='';
+q.options.forEach(function(o){
+var b=document.createElement('button');
+b.type='button';b.className='quick-opt'+(q.select.value!==''&&q.select.value===o.value?' selected':'');
+b.textContent=o.textContent;
+b.addEventListener('click',function(){
+q.select.value=o.value;
+q.select.dispatchEvent(new Event('change',{bubbles:true}));
+Array.from(quickOpts.children).forEach(function(x){x.classList.remove('selected')});
+b.classList.add('selected');
+setTimeout(advanceQuick,200);
+});
+quickOpts.appendChild(b);
+});
+}
+function advanceQuick(){
+quickIdx++;
+if(quickIdx>=quickQs.length){showStep(steps.indexOf(sections()[0]));}
+else{renderQuick();updateBar();}
+}
+function updateBar(){
+stepLabel.textContent='第 '+(stepIdx+1)+' 步，共 '+steps.length+' 步';
+fillEl.style.width=((stepIdx+1)/steps.length*100)+'%';
+}
+function showStep(i){
+if(!steps.length)return;
+stepIdx=Math.max(0,Math.min(i,steps.length-1));
+var secs=sections(),tailEl=tail(),cur=steps[stepIdx];
+secs.forEach(function(s){s.classList.toggle('wstep-hidden',s!==cur)});
+tailEl.classList.toggle('wstep-hidden',cur!==secs[secs.length-1]);
+quickBox.classList.toggle('active',cur===quickBox);
+if(cur===quickBox){quickIdx=Math.min(quickIdx,quickQs.length-1);renderQuick();}
+stepError.classList.remove('show');
+backBtn.hidden=false;
+nextBtn.hidden=(cur===quickBox||cur===secs[secs.length-1]);
+bar.classList.add('active');nav.classList.add('active');
+updateBar();
+}
+function initWizard(){
+var secs=sections();
+if(!secs.length||secs.every(function(s){return knownSections.has(s)}))return;
+initializing=true;
+secs.forEach(function(s){knownSections.add(s)});
+/* Move the contact section to the last step, then renumber the section badges. */
+if(secs.length>1){content.appendChild(secs[0]);secs=sections();}
+secs.forEach(function(s,i){var n=s.querySelector('.section-num');if(n)n.textContent=String(i+1)});
+tail();
+buildQuick();
+applyIndustryPreset();
+quickIdx=0;
+steps=(quickQs.length?[quickBox]:[]).concat(secs);
+showStep(0);
+initializing=false;
+}
+function teardown(){
+steps=[];quickQs=[];myType='';
+bar.classList.remove('active');nav.classList.remove('active');quickBox.classList.remove('active');
+}
+grid.addEventListener('click',function(e){
+var b=e.target.closest('[data-type]');
+if(b)myType=b.dataset.type;
+});
+document.getElementById('changeType').addEventListener('click',teardown);
+document.getElementById('newQuoteBtn').addEventListener('click',teardown);
+new MutationObserver(function(){
+if(initializing)return;
+if(shell.classList.contains('active')&&content.querySelector('.section'))initWizard();
+}).observe(content,{childList:true});
+quickSkip.addEventListener('click',advanceQuick);
+backBtn.addEventListener('click',function(){
+if(steps[stepIdx]===quickBox){document.getElementById('changeType').click();return}
+showStep(stepIdx-1);
+shell.scrollIntoView({behavior:'smooth',block:'start'});
+});
+nextBtn.addEventListener('click',function(){
+var cur=steps[stepIdx];
+var bad=stepInvalidField(cur);
+if(bad){
+bad.setAttribute('aria-invalid','true');
+stepError.textContent='请先填写红色星号标注的必填项。';
+stepError.classList.add('show');
+bad.focus({preventScroll:true});
+bad.scrollIntoView({behavior:'smooth',block:'center'});
+return;
+}
+showStep(stepIdx+1);
+shell.scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.querySelector('.language-switcher').addEventListener('click',function(){
+setTimeout(function(){
+if(!steps.length)return;
+updateBar();
+if(steps[stepIdx]===quickBox)renderQuick();
+},60);
+});
+form.addEventListener('submit',function(){
+setTimeout(function(){
+var eb=document.getElementById('errorBox');
+if(!eb.classList.contains('show')||!steps.length)return;
+var bad=form.querySelector('[aria-invalid="true"]')||form.querySelector(':invalid');
+if(!bad)return;
+var sec=bad.closest('.section');
+if(!sec)return;
+var idx=steps.indexOf(sec);
+if(idx>=0&&idx!==stepIdx)showStep(idx);
+bad.focus({preventScroll:true});
+sec.scrollIntoView({behavior:'smooth',block:'center'});
+},0);
+});
+(function(){
+var p=new URLSearchParams(location.search);
+var t=p.get('type');
+if(!t)return;
+var btn=grid.querySelector('[data-type="'+t+'"]');
+if(!btn)return;
+industryPreset=p.get('industry')||null;
+setTimeout(function(){btn.click()},80);
+})();
 })();
 </script>
 </body>
